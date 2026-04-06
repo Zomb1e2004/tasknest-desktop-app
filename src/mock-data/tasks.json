@@ -1,0 +1,302 @@
+[
+  {
+    "id": "1",
+    "title": "Implementar IndexedDB",
+    "description": "Guardar notas localmente usando IndexedDB.",
+    "completed": false,
+    "priority": "high",
+    "tag": "development",
+    "dueDate": "2026-04-05T18:00:00Z",
+    "createdAt": "2026-04-03T10:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Diseñar sidebar",
+    "description": "Crear navegación principal con TailwindCSS.",
+    "completed": false,
+    "priority": "medium",
+    "tag": "UI",
+    "dueDate": "2026-04-02T20:00:00Z",
+    "createdAt": "2026-04-01T14:20:00Z"
+  },
+  {
+    "id": "3",
+    "title": "Animaciones de páginas",
+    "description": "Agregar transiciones suaves con motion-v.",
+    "completed": false,
+    "priority": "low",
+    "tag": "animation",
+    "dueDate": "2026-04-07T12:00:00Z",
+    "createdAt": "2026-04-03T09:30:00Z"
+  },
+  {
+    "id": "4",
+    "title": "Configurar persistencia",
+    "description": "Implementar guardado automático de cambios.",
+    "completed": false,
+    "priority": "high",
+    "tag": "development",
+    "dueDate": "2026-04-08T18:00:00Z",
+    "createdAt": "2026-04-04T08:10:00Z"
+  },
+  {
+    "id": "5",
+    "title": "Modo oscuro",
+    "description": "Agregar soporte dark mode con Tailwind.",
+    "completed": false,
+    "priority": "medium",
+    "tag": "UI",
+    "dueDate": "2026-04-09T20:00:00Z",
+    "createdAt": "2026-04-04T08:30:00Z"
+  },
+  {
+    "id": "6",
+    "title": "Sistema de etiquetas",
+    "description": "Permitir asignar múltiples tags a tareas.",
+    "completed": false,
+    "priority": "medium",
+    "tag": "feature",
+    "dueDate": "2026-04-10T17:00:00Z",
+    "createdAt": "2026-04-04T09:00:00Z"
+  },
+  {
+    "id": "7",
+    "title": "Filtrado de tareas",
+    "description": "Filtrar por prioridad y estado.",
+    "completed": false,
+    "priority": "high",
+    "tag": "feature",
+    "dueDate": "2026-04-06T16:00:00Z",
+    "createdAt": "2026-04-04T09:20:00Z"
+  },
+  {
+    "id": "8",
+    "title": "Búsqueda rápida",
+    "description": "Implementar búsqueda en tiempo real.",
+    "completed": false,
+    "priority": "high",
+    "tag": "feature",
+    "dueDate": "2026-04-11T14:00:00Z",
+    "createdAt": "2026-04-04T09:40:00Z"
+  },
+  {
+    "id": "9",
+    "title": "Optimizar renderizado",
+    "description": "Reducir renders innecesarios en listas.",
+    "completed": false,
+    "priority": "medium",
+    "tag": "performance",
+    "dueDate": "2026-04-12T13:00:00Z",
+    "createdAt": "2026-04-04T10:00:00Z"
+  },
+  {
+    "id": "10",
+    "title": "Notificaciones locales",
+    "description": "Mostrar recordatorios de tareas.",
+    "completed": false,
+    "priority": "high",
+    "tag": "feature",
+    "dueDate": "2026-04-13T15:00:00Z",
+    "createdAt": "2026-04-04T10:15:00Z"
+  },
+  {
+    "id": "11",
+    "title": "Refactor store",
+    "description": "Separar lógica de estado en módulos.",
+    "completed": false,
+    "priority": "medium",
+    "tag": "refactor",
+    "dueDate": "2026-04-14T18:30:00Z",
+    "createdAt": "2026-04-04T10:30:00Z"
+  },
+  {
+    "id": "12",
+    "title": "Atajos de teclado",
+    "description": "Agregar shortcuts para acciones comunes.",
+    "completed": false,
+    "priority": "low",
+    "tag": "UX",
+    "dueDate": "2026-04-15T19:00:00Z",
+    "createdAt": "2026-04-04T10:45:00Z"
+  },
+  {
+    "id": "13",
+    "title": "Indicador offline",
+    "description": "Mostrar estado de conexión.",
+    "completed": false,
+    "priority": "medium",
+    "tag": "feature",
+    "dueDate": "2026-04-16T12:00:00Z",
+    "createdAt": "2026-04-04T11:00:00Z"
+  },
+  {
+    "id": "14",
+    "title": "Exportar notas",
+    "description": "Permitir exportar a JSON.",
+    "completed": true,
+    "priority": "low",
+    "tag": "feature",
+    "dueDate": "2026-04-17T11:30:00Z",
+    "createdAt": "2026-04-04T11:15:00Z"
+  },
+  {
+    "id": "15",
+    "title": "Importar datos",
+    "description": "Restaurar notas desde archivo.",
+    "completed": true,
+    "priority": "medium",
+    "tag": "feature",
+    "dueDate": "2026-04-18T11:30:00Z",
+    "createdAt": "2026-04-04T11:25:00Z"
+  },
+  {
+    "id": "16",
+    "title": "Skeleton loaders",
+    "description": "Agregar loaders visuales.",
+    "completed": true,
+    "priority": "low",
+    "tag": "UI",
+    "dueDate": "2026-04-19T16:30:00Z",
+    "createdAt": "2026-04-04T11:40:00Z"
+  },
+  {
+    "id": "17",
+    "title": "Validación formularios",
+    "description": "Validar inputs antes de guardar.",
+    "completed": true,
+    "priority": "high",
+    "tag": "development",
+    "dueDate": "2026-04-06T10:00:00Z",
+    "createdAt": "2026-04-04T12:00:00Z"
+  },
+  {
+    "id": "18",
+    "title": "Historial de cambios",
+    "description": "Guardar versiones de notas.",
+    "completed": true,
+    "priority": "medium",
+    "tag": "feature",
+    "dueDate": "2026-04-20T14:00:00Z",
+    "createdAt": "2026-04-04T12:15:00Z"
+  },
+  {
+    "id": "19",
+    "title": "Optimizar IndexedDB",
+    "description": "Indexar consultas frecuentes.",
+    "completed": true,
+    "priority": "high",
+    "tag": "performance",
+    "dueDate": "2026-04-21T18:00:00Z",
+    "createdAt": "2026-04-04T12:30:00Z"
+  },
+  {
+    "id": "20",
+    "title": "Drag and drop",
+    "description": "Reordenar tareas arrastrando.",
+    "completed": true,
+    "priority": "medium",
+    "tag": "UX",
+    "dueDate": "2026-04-22T13:00:00Z",
+    "createdAt": "2026-04-04T12:45:00Z"
+  },
+  {
+    "id": "21",
+    "title": "Vista calendario",
+    "description": "Mostrar tareas por fecha.",
+    "completed": false,
+    "priority": "low",
+    "tag": "feature",
+    "dueDate": "2026-04-23T17:00:00Z",
+    "createdAt": "2026-04-04T13:00:00Z"
+  },
+  {
+    "id": "22",
+    "title": "Persistir configuración",
+    "description": "Guardar preferencias del usuario.",
+    "completed": true,
+    "priority": "medium",
+    "tag": "development",
+    "dueDate": "2026-04-24T19:00:00Z",
+    "createdAt": "2026-04-04T13:15:00Z"
+  },
+  {
+    "id": "23",
+    "title": "Optimizar bundle",
+    "description": "Reducir tamaño final de la app.",
+    "completed": true,
+    "priority": "high",
+    "tag": "performance",
+    "dueDate": "2026-04-25T16:00:00Z",
+    "createdAt": "2026-04-04T13:30:00Z"
+  },
+  {
+    "id": "24",
+    "title": "Página de ajustes",
+    "description": "Crear sección settings.",
+    "completed": true,
+    "priority": "medium",
+    "tag": "UI",
+    "dueDate": "2026-04-26T15:00:00Z",
+    "createdAt": "2026-04-04T13:45:00Z"
+  },
+  {
+    "id": "25",
+    "title": "Animaciones microinteracción",
+    "description": "Feedback visual en botones.",
+    "completed": false,
+    "priority": "low",
+    "tag": "animation",
+    "dueDate": "2026-04-27T12:00:00Z",
+    "createdAt": "2026-04-04T14:00:00Z"
+  },
+  {
+    "id": "26",
+    "title": "Sincronización futura",
+    "description": "Preparar estructura para sync cloud.",
+    "completed": false,
+    "priority": "low",
+    "tag": "architecture",
+    "dueDate": "2026-04-28T11:00:00Z",
+    "createdAt": "2026-04-04T14:15:00Z"
+  },
+  {
+    "id": "27",
+    "title": "Tests unitarios",
+    "description": "Agregar pruebas básicas.",
+    "completed": true,
+    "priority": "high",
+    "tag": "testing",
+    "dueDate": "2026-04-29T18:00:00Z",
+    "createdAt": "2026-04-04T14:30:00Z"
+  },
+  {
+    "id": "28",
+    "title": "Lazy loading rutas",
+    "description": "Cargar páginas bajo demanda.",
+    "completed": true,
+    "priority": "medium",
+    "tag": "performance",
+    "dueDate": "2026-04-30T16:00:00Z",
+    "createdAt": "2026-04-04T14:45:00Z"
+  },
+  {
+    "id": "29",
+    "title": "Documentación interna",
+    "description": "Agregar comentarios y README.",
+    "completed": false,
+    "priority": "low",
+    "tag": "documentation",
+    "dueDate": "2026-05-01T13:00:00Z",
+    "createdAt": "2026-04-04T15:00:00Z"
+  },
+  {
+    "id": "30",
+    "title": "Pantalla onboarding",
+    "description": "Guía inicial para nuevos usuarios.",
+    "completed": true,
+    "priority": "medium",
+    "tag": "UX",
+    "dueDate": "2026-05-02T12:00:00Z",
+    "createdAt": "2026-04-04T15:15:00Z"
+  }
+]

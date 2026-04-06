@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+* {
+  scroll-behavior: smooth;
+  font-family: "Manrope", sans-serif;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
