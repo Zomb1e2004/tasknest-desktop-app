@@ -75,8 +75,25 @@ const handleUpdate = async () => {
 
 <template>
   <Page class="flex flex-col h-full min-h-0">
-    <div class="flex flex-col gap-4 sm:gap-5.5 flex-1 min-h-0 w-full">
+    <div class="flex flex-col gap-4 sm:gap-3.5 flex-1 min-h-0 w-full">
       <NoteTitleInput v-model="noteTitle" />
+      <div class="flex flex-wrap gap-2">
+        <template v-if="note?.tags && note.tags.length > 0">
+          <div
+            v-for="tag in note.tags"
+            :key="tag"
+            class="px-2.5 py-1 rounded-lg bg-black/5 border border-black/5 text-[11px] font-bold text-black/50 uppercase tracking-tight"
+          >
+            #{{ tag }}
+          </div>
+        </template>
+        <div
+          v-else
+          class="px-2.5 py-1 rounded-lg bg-black/5 border border-black/5 text-[11px] font-bold text-black/30 uppercase tracking-tight italic"
+        >
+          Sin etiquetas
+        </div>
+      </div>
       <NoteContentInput
         v-model="noteContent"
         :format="note?.format ?? 'txt'"
