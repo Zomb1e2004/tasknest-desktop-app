@@ -3,7 +3,7 @@ import Modal from "../../../shared/components/Modal.vue";
 import Button from "../../../shared/components/Button.vue";
 import type { Tag } from "../models/TagModel";
 
-const props = defineProps<{
+defineProps<{
   tags: string[];
   allTags: Tag[];
   newTag: string;

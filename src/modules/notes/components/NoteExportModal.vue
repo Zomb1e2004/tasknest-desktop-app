@@ -3,7 +3,7 @@ import Modal from "../../../shared/components/Modal.vue";
 import Button from "../../../shared/components/Button.vue";
 import type { Note } from "../models/NoteModel";
 
-const props = defineProps<{
+defineProps<{
   note: Note;
 }>();
 
