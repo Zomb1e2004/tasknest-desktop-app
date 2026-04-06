@@ -13,25 +13,25 @@ const { addToast } = useToast();
 const showWelcomeModal = ref(false);
 
 onMounted(() => {
-  // window.addEventListener("keydown", (e) => {
-  //   if (
-  //     e.key === "F5" ||
-  //     (e.ctrlKey && e.key === "r") ||
-  //     (e.ctrlKey && e.shiftKey && e.key === "I")
-  //   ) {
-  //     e.preventDefault();
-  //   }
-  // });
+  window.addEventListener("keydown", (e) => {
+    if (
+      e.key === "F5" ||
+      (e.ctrlKey && e.key === "r") ||
+      (e.ctrlKey && e.shiftKey && e.key === "I")
+    ) {
+      e.preventDefault();
+    }
+  });
 
-  // window.addEventListener("mouseup", (e) => {
-  //   if (e.button === 3 || e.button === 4) {
-  //     e.preventDefault();
-  //   }
-  // });
+  window.addEventListener("mouseup", (e) => {
+    if (e.button === 3 || e.button === 4) {
+      e.preventDefault();
+    }
+  });
 
-  // window.addEventListener("contextmenu", (e) => {
-  //   e.preventDefault();
-  // });
+  window.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
 
   if (!userName.value) {
     showWelcomeModal.value = true;
