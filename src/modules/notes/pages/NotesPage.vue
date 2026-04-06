@@ -33,7 +33,7 @@ onMounted(loadNotes);
       <OrderNotesBy />
     </div>
     <div class="mt-6">
-      <NoteList :notes="sortedNotes" @delete="loadNotes" />
+      <NoteList :notes="sortedNotes" @delete="loadNotes" @update="loadNotes" />
     </div>
 
     <ScrollToTop />

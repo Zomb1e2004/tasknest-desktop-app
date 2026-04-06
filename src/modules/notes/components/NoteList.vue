@@ -26,6 +26,7 @@ defineProps<{
 
 defineEmits<{
   (e: "delete"): void;
+  (e: "update"): void;
 }>();
 
 const handleSelectNote = async (note: Note) => {
@@ -74,6 +75,7 @@ const handleSelectNote = async (note: Note) => {
         :show-visits="true"
         class="cursor-pointer"
         @delete="$emit('delete')"
+        @toggle-pin="$emit('update')"
         @click="handleSelectNote(note)"
       />
     </motion.div>

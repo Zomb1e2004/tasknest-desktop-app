@@ -80,6 +80,7 @@ const handleUpdate = async () => {
       <NoteContentInput
         v-model="noteContent"
         :format="note?.format ?? 'txt'"
+        :pinned="note?.isPinned"
         :noteId="note?.id"
         class="flex-1 min-h-0"
       />

@@ -26,6 +26,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: "delete", id: string): void;
+  (e: "togglePin", id: string, isPinned: boolean): void;
 }>();
 
 const { addToast } = useToast();
@@ -110,6 +111,27 @@ const handleConfirmDelete = async () => {
   }
 };
 
+const handleTogglePin = async () => {
+  try {
+    const newPinnedStatus = !props.note.isPinned;
+    await noteService.update(props.note.id, { isPinned: newPinnedStatus });
+    emit("togglePin", props.note.id, newPinnedStatus);
+    addToast({
+      title: newPinnedStatus ? "Nota fijada" : "Nota desfijada",
+      message: newPinnedStatus
+        ? "La nota aparecerá al principio de la lista."
+        : "La nota ya no aparecerá al principio.",
+      type: "success",
+    });
+  } catch (error) {
+    addToast({
+      title: "Error",
+      message: "No se pudo cambiar el estado de la nota.",
+      type: "error",
+    });
+  }
+};
+
 const downloadNote = async () => {
   const isMd = props.note.format === "md";
   const content = isMd
@@ -177,6 +199,7 @@ const downloadNote = async () => {
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
     class="group relative bg-white border border-black/10 rounded-3xl p-4.5 flex flex-col gap-6 shadow-sm hover:shadow-lg hover:border-black/20 transition-all duration-300 cursor-pointer overflow-hidden"
+    :class="{ 'border-black/30 bg-black/1!': note.isPinned }"
   >
     <div
       class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 to-transparent"
@@ -185,11 +208,13 @@ const downloadNote = async () => {
     <div class="flex-1 flex flex-col gap-4 relative z-10">
       <div class="flex items-start justify-between gap-4">
         <div class="flex flex-col gap-2 flex-1 min-w-0">
-          <h3
-            class="text-[17px] font-bold text-black/80 leading-snug group-hover:text-black transition-colors truncate"
-          >
-            {{ note.title }}
-          </h3>
+          <div class="flex items-center gap-2 min-w-0">
+            <h3
+              class="text-[17px] font-bold text-black/80 leading-snug group-hover:text-black transition-colors truncate"
+            >
+              {{ note.title }}
+            </h3>
+          </div>
 
           <div
             v-if="note.format"
@@ -202,7 +227,28 @@ const downloadNote = async () => {
           </div>
         </div>
 
-        <div v-if="showOptions" class="relative flex options-container">
+        <div
+          v-if="showOptions"
+          class="relative flex items-center gap-1 options-container"
+        >
+          <button
+            @click.stop="handleTogglePin"
+            class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg transition-all"
+            :class="
+              note.isPinned
+                ? 'text-black bg-black/10 hover:bg-black/15'
+                : 'text-black/30 hover:text-black hover:bg-black/5'
+            "
+            :title="note.isPinned ? 'Desfijar nota' : 'Fijar nota'"
+          >
+            <span
+              class="material-symbols-outlined text-[20px]"
+              :class="{ 'fill-1': note.isPinned }"
+            >
+              keep
+            </span>
+          </button>
+
           <button
             @click.stop="toggleOptions"
             class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg text-black/30 hover:text-black hover:bg-black/5 transition-all"
