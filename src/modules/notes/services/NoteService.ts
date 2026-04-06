@@ -1,6 +1,7 @@
 import type { DBSchema, IDBPDatabase } from "idb";
 import { BaseService } from "../../../shared/services/BaseService";
 import type { Note } from "../models/NoteModel";
+import type { Tag } from "../models/TagModel";
 
 export interface AppDB extends DBSchema {
   notes: {
@@ -11,11 +12,18 @@ export interface AppDB extends DBSchema {
       "by-updatedAt": string;
     };
   };
+  tags: {
+    key: string;
+    value: Tag;
+    indexes: {
+      "by-name": string;
+    };
+  };
 }
 
 class NoteService extends BaseService<AppDB, "notes", Note> {
   constructor() {
-    super("app-db", "notes", 1);
+    super("app-db", "notes", 2);
   }
 
   protected schema(db: IDBPDatabase<AppDB>): void {
@@ -26,6 +34,14 @@ class NoteService extends BaseService<AppDB, "notes", Note> {
 
       store.createIndex("by-createdAt", "createdAt");
       store.createIndex("by-updatedAt", "updatedAt");
+    }
+
+    if (!db.objectStoreNames.contains("tags")) {
+      const store = db.createObjectStore("tags", {
+        keyPath: "id",
+      });
+
+      store.createIndex("by-name", "name", { unique: true });
     }
   }
 
@@ -41,6 +57,18 @@ class NoteService extends BaseService<AppDB, "notes", Note> {
   async getRecent(): Promise<Note[]> {
     const db = await this.getDB();
     return db.getAllFromIndex("notes", "by-updatedAt");
+  }
+
+  async removeTagFromAllNotes(tagName: string): Promise<void> {
+    const db = await this.getDB();
+    const notes = await db.getAll("notes");
+
+    for (const note of notes) {
+      if (note.tags.includes(tagName)) {
+        const updatedTags = note.tags.filter((t) => t !== tagName);
+        await this.update(note.id, { tags: updatedTags });
+      }
+    }
   }
 }
 

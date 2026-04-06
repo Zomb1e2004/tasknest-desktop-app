@@ -20,31 +20,32 @@ export const useNotesSort = () => {
     return computed(() => {
       const notesArray = unref(notes);
       return [...notesArray].sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+
         if (sortOption.value === "totalVisits") {
           const numA = a.totalVisits || 0;
           const numB = b.totalVisits || 0;
           return sortOrder.value === "asc" ? numA - numB : numB - numA;
         }
 
-        let valA = a[sortOption.value as keyof Note] as string;
-        let valB = b[sortOption.value as keyof Note] as string;
+        let valA = a[sortOption.value as keyof Note] as string | number;
+        let valB = b[sortOption.value as keyof Note] as string | number;
 
         if (
           sortOption.value === "createdAt" ||
           sortOption.value === "updatedAt"
         ) {
-          valA = new Date(valA).getTime().toString();
-          valB = new Date(valB).getTime().toString();
-          return sortOrder.value === "asc"
-            ? Number(valA) - Number(valB)
-            : Number(valB) - Number(valA);
+          const timeA = Number(valA);
+          const timeB = Number(valB);
+          return sortOrder.value === "asc" ? timeA - timeB : timeB - timeA;
         }
 
-        valA = valA.toLowerCase();
-        valB = valB.toLowerCase();
+        const strA = String(valA).toLowerCase();
+        const strB = String(valB).toLowerCase();
 
-        if (valA < valB) return sortOrder.value === "asc" ? -1 : 1;
-        if (valA > valB) return sortOrder.value === "asc" ? 1 : -1;
+        if (strA < strB) return sortOrder.value === "asc" ? -1 : 1;
+        if (strA > strB) return sortOrder.value === "asc" ? 1 : -1;
         return 0;
       });
     });

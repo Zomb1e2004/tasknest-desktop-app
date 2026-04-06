@@ -1,4 +1,3 @@
-<!-- NoteContentInput.vue -->
 <script setup lang="ts">
 import { ref, computed, onUnmounted, watch, useTemplateRef } from "vue";
 import { marked } from "marked";
@@ -9,6 +8,7 @@ import { useToast } from "../../../shared/composables/useToast";
 const content = defineModel<string>({ default: "" });
 const props = defineProps<{
   format: "md" | "txt";
+  pinned?: boolean;
   noteId?: string;
 }>();
 
@@ -363,6 +363,11 @@ onUnmounted(() => {
       <NoteBadge
         :icon="format === 'md' ? 'markdown' : 'description'"
         :value="format.toUpperCase()"
+      />
+
+      <NoteBadge
+        :icon="pinned ? 'keep' : 'keep_off'"
+        :value="pinned ? 'Fijada' : 'No fijada'"
       />
 
       <NoteBadge

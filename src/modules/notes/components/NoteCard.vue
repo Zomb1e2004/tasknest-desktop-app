@@ -2,11 +2,15 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { motion } from "motion-v";
 import type { Note } from "../models/NoteModel";
-import Modal from "../../../shared/components/Modal.vue";
-import Button from "../../../shared/components/Button.vue";
 import StatusModal from "../../../shared/components/StatusModal.vue";
 import { noteService } from "../services/NoteService";
+import { tagService } from "../services/TagService";
 import { useToast } from "../../../shared/composables/useToast";
+import type { Tag } from "../models/TagModel";
+import NoteExportModal from "./NoteExportModal.vue";
+import NoteDeleteModal from "./NoteDeleteModal.vue";
+import NoteTagModal from "./NoteTagModal.vue";
+import NoteOptions from "./NoteOptions.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -14,18 +18,24 @@ const props = withDefaults(
     index?: number;
     showOptions?: boolean;
     showVisits?: boolean;
+    showPin?: boolean;
+    showTags?: boolean;
     dateType?: "createdAt" | "updatedAt" | "both";
   }>(),
   {
     index: 0,
     showOptions: false,
     showVisits: false,
+    showPin: true,
+    showTags: true,
     dateType: "updatedAt",
   },
 );
 
 const emit = defineEmits<{
   (e: "delete", id: string): void;
+  (e: "togglePin", id: string, isPinned: boolean): void;
+  (e: "tagCreated"): void;
 }>();
 
 const { addToast } = useToast();
@@ -46,8 +56,17 @@ const getRelativeTime = (date: number, type: "createdAt" | "updatedAt") => {
 };
 
 const isOptionsOpen = ref(false);
+const optionsButtonRef = ref<HTMLElement | null>(null);
+const dropdownPos = ref({ top: 0, left: 0 });
 
 const toggleOptions = () => {
+  if (!isOptionsOpen.value && optionsButtonRef.value) {
+    const rect = optionsButtonRef.value.getBoundingClientRect();
+    dropdownPos.value = {
+      top: rect.bottom + window.scrollY + 8,
+      left: rect.right + window.scrollX - 160,
+    };
+  }
   isOptionsOpen.value = !isOptionsOpen.value;
 };
 
@@ -105,6 +124,125 @@ const handleConfirmDelete = async () => {
     addToast({
       title: "Error",
       message: "No se pudo eliminar la nota.",
+      type: "error",
+    });
+  }
+};
+
+const handleTogglePin = async () => {
+  try {
+    const newPinnedStatus = !props.note.isPinned;
+    await noteService.update(props.note.id, { isPinned: newPinnedStatus });
+    emit("togglePin", props.note.id, newPinnedStatus);
+    addToast({
+      title: newPinnedStatus ? "Nota fijada" : "Nota desfijada",
+      message: newPinnedStatus
+        ? "La nota aparecerá al principio de la lista."
+        : "La nota ya no aparecerá al principio.",
+      type: "success",
+    });
+  } catch (error) {
+    addToast({
+      title: "Error",
+      message: "No se pudo cambiar el estado de la nota.",
+      type: "error",
+    });
+  }
+};
+
+const showTagModal = ref(false);
+const newTag = ref("");
+const allTags = ref<Tag[]>([]);
+
+const loadTags = async () => {
+  allTags.value = await tagService.getAll();
+};
+
+const handleTagsClick = () => {
+  isOptionsOpen.value = false;
+  showTagModal.value = true;
+  loadTags();
+};
+
+const addTag = async (tagName: string) => {
+  const cleanName = tagName.trim().toLowerCase();
+  if (!cleanName) return;
+
+  if (props.note.tags.includes(cleanName)) {
+    addToast({
+      title: "Etiqueta ya existe",
+      message: "Esta nota ya tiene esa etiqueta.",
+      type: "error",
+    });
+    return;
+  }
+
+  if (props.note.tags.length >= 3) {
+    addToast({
+      title: "Límite alcanzado",
+      message: "Máximo 3 etiquetas por nota.",
+      type: "error",
+    });
+    return;
+  }
+
+  try {
+    const existing = await tagService.getByName(cleanName);
+    if (!existing) {
+      await tagService.create({ name: cleanName });
+      emit("tagCreated");
+    }
+
+    const updatedTags = [...props.note.tags, cleanName];
+    await noteService.update(props.note.id, { tags: updatedTags });
+    props.note.tags = updatedTags;
+    newTag.value = "";
+    addToast({
+      title: "Etiqueta añadida",
+      message: `Se ha añadido "${cleanName}" a la nota.`,
+      type: "success",
+    });
+  } catch (error) {
+    addToast({
+      title: "Error",
+      message: "No se pudo añadir la etiqueta.",
+      type: "error",
+    });
+  }
+};
+
+const removeTag = async (tagName: string) => {
+  try {
+    const updatedTags = props.note.tags.filter((t) => t !== tagName);
+    await noteService.update(props.note.id, { tags: updatedTags });
+    props.note.tags = updatedTags;
+    addToast({
+      title: "Etiqueta eliminada",
+      message: "Se ha quitado la etiqueta de la nota.",
+      type: "success",
+    });
+  } catch (error) {
+    addToast({
+      title: "Error",
+      message: "No se pudo eliminar la etiqueta.",
+      type: "error",
+    });
+  }
+};
+
+const clearAllTags = async () => {
+  try {
+    await noteService.update(props.note.id, { tags: [] });
+    props.note.tags = [];
+    addToast({
+      title: "Etiquetas eliminadas",
+      message: "Se han quitado todas las etiquetas de la nota.",
+      type: "success",
+    });
+  } catch (error) {
+    addToast({
+      title: "Error",
+      message: "No se pudieron eliminar las etiquetas.",
       type: "error",
     });
   }
@@ -176,20 +314,23 @@ const downloadNote = async () => {
     :initial="{ opacity: 0, y: 0 }"
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
-    class="group relative bg-white border border-black/10 rounded-3xl p-4.5 flex flex-col gap-6 shadow-sm hover:shadow-lg hover:border-black/20 transition-all duration-300 cursor-pointer overflow-hidden"
+    class="group relative bg-white border border-black/10 rounded-3xl p-4.5 flex flex-col gap-6 shadow-sm hover:shadow-lg hover:border-black/20 transition-all duration-300 cursor-pointer overflow-visible"
+    :class="{ 'border-black/30 bg-black/1!': note.isPinned && showPin }"
   >
     <div
-      class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 to-transparent"
+      class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 to-transparent rounded-3xl"
     />
 
     <div class="flex-1 flex flex-col gap-4 relative z-10">
       <div class="flex items-start justify-between gap-4">
         <div class="flex flex-col gap-2 flex-1 min-w-0">
-          <h3
-            class="text-[17px] font-bold text-black/80 leading-snug group-hover:text-black transition-colors truncate"
-          >
-            {{ note.title }}
-          </h3>
+          <div class="flex items-center gap-2 min-w-0">
+            <h3
+              class="text-[17px] font-bold text-black/80 leading-snug group-hover:text-black transition-colors truncate"
+            >
+              {{ note.title }}
+            </h3>
+          </div>
 
           <div
             v-if="note.format"
@@ -202,8 +343,33 @@ const downloadNote = async () => {
           </div>
         </div>
 
-        <div v-if="showOptions" class="relative flex options-container">
+        <!-- ✅ Solo botones, sin el div relative que envolvía el dropdown -->
+        <div
+          v-if="showOptions"
+          class="flex items-center gap-1 options-container"
+        >
           <button
+            v-if="showPin"
+            @click.stop="handleTogglePin"
+            class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg transition-all"
+            :class="
+              note.isPinned
+                ? 'text-black bg-black/10 hover:bg-black/15'
+                : 'text-black/30 hover:text-black hover:bg-black/5'
+            "
+            :title="note.isPinned ? 'Desfijar nota' : 'Fijar nota'"
+          >
+            <span
+              class="material-symbols-outlined text-[20px]"
+              :class="{ 'fill-1': note.isPinned }"
+            >
+              keep
+            </span>
+          </button>
+
+          <!-- ✅ ref agregado aquí -->
+          <button
+            ref="optionsButtonRef"
             @click.stop="toggleOptions"
             class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg text-black/30 hover:text-black hover:bg-black/5 transition-all"
             :class="isOptionsOpen ? 'bg-black/5 text-black' : ''"
@@ -212,40 +378,6 @@ const downloadNote = async () => {
               more_vert
             </span>
           </button>
-
-          <transition
-            enter-active-class="transition duration-150 ease-out"
-            enter-from-class="scale-95 opacity-0"
-            enter-to-class="scale-100 opacity-100"
-            leave-active-class="transition duration-100 ease-in"
-            leave-from-class="scale-100 opacity-100"
-            leave-to-class="scale-95 opacity-0"
-          >
-            <div
-              v-if="isOptionsOpen"
-              class="absolute top-full right-0 mt-2 w-40 bg-white border border-black/10 rounded-xl shadow-xl z-20 py-1.5 overflow-hidden"
-            >
-              <button
-                @click.stop="handleExportClick"
-                class="w-full cursor-pointer text-left px-4 py-2.5 text-sm font-semibold text-black/60 hover:text-black hover:bg-black/5 transition flex items-center gap-2"
-              >
-                <span class="material-symbols-outlined text-[16px]">
-                  file_download
-                </span>
-                Exportar
-              </button>
-
-              <button
-                @click.stop="handleDeleteClick"
-                class="w-full cursor-pointer text-left px-4 py-2.5 text-sm font-semibold text-[#D32F2F]/80 hover:text-[#D32F2F] hover:bg-[#D32F2F]/10 transition flex items-center gap-2"
-              >
-                <span class="material-symbols-outlined text-[16px]">
-                  delete
-                </span>
-                Eliminar
-              </button>
-            </div>
-          </transition>
         </div>
       </div>
 
@@ -254,6 +386,24 @@ const downloadNote = async () => {
       >
         {{ note.content }}
       </p>
+
+      <div v-if="showTags" class="flex flex-wrap gap-2 mt-auto">
+        <template v-if="note.tags && note.tags.length > 0">
+          <div
+            v-for="tag in note.tags"
+            :key="tag"
+            class="px-2 py-0.5 rounded-md bg-black/5 border border-black/5 text-[10px] font-bold text-black/40 uppercase tracking-tight"
+          >
+            #{{ tag }}
+          </div>
+        </template>
+        <div
+          v-else
+          class="px-2 py-0.5 rounded-md bg-black/5 border border-black/5 text-[10px] font-bold text-black/40 uppercase tracking-tight"
+        >
+          Sin etiquetas
+        </div>
+      </div>
     </div>
 
     <div
@@ -305,108 +455,27 @@ const downloadNote = async () => {
     </div>
 
     <Teleport to="body">
-      <Modal
-        :close-on-click-outside="true"
+      <NoteOptions
+        :show="isOptionsOpen"
+        :top="dropdownPos.top"
+        :left="dropdownPos.left"
+        @export="handleExportClick"
+        @tags="handleTagsClick"
+        @delete="handleDeleteClick"
+      />
+
+      <NoteExportModal
         v-if="showExportModal"
+        :note="note"
+        @confirm="downloadNote"
         @close="showExportModal = false"
-      >
-        <div class="flex flex-col gap-6 w-full text-left">
-          <div class="flex flex-col gap-2">
-            <div
-              class="w-12 h-12 bg-black/5 rounded-2xl flex items-center justify-center mb-1"
-            >
-              <span class="material-symbols-outlined text-[24px] text-black">
-                {{ note.format === "md" ? "markdown" : "file_download" }}
-              </span>
-            </div>
-            <h3 class="text-xl font-bold text-black leading-tight">
-              Exportar como {{ note.format.toUpperCase() }}
-            </h3>
-            <p
-              v-if="note.format === 'txt'"
-              class="text-black/60 font-medium text-[14px] leading-relaxed"
-            >
-              La nota será descargada con la siguiente estructura clásica:
-            </p>
-            <p
-              v-else
-              class="text-black/60 font-medium text-[14px] leading-relaxed"
-            >
-              La nota será descargada en su formato
-              <span class="font-bold text-black">raw</span> original, sin
-              estructuras adicionales.
-            </p>
-          </div>
+      />
 
-          <div
-            v-if="note.format === 'txt'"
-            class="bg-black/5 p-4 rounded-xl border border-black/10 flex flex-col gap-1 text-[13px] text-black/80 font-medium font-mono"
-          >
-            <span>{{ note.title }}</span>
-            <br />
-            <span>{Contenido}</span>
-            <br />
-            <span
-              >Creado el
-              {{ new Date(note.createdAt).toLocaleDateString("es-ES") }}</span
-            >
-          </div>
-
-          <div
-            v-else
-            class="bg-black/5 p-4 rounded-xl border border-black/10 flex flex-col gap-1 text-[13px] text-black/80 font-medium font-mono"
-          >
-            <span>{Contenido Raw}</span>
-          </div>
-
-          <div class="flex items-center justify-end gap-3 mt-2">
-            <Button variant="ghost" @click="showExportModal = false">
-              Cancelar
-            </Button>
-            <Button @click="downloadNote">Descargar</Button>
-          </div>
-        </div>
-      </Modal>
-
-      <Modal
-        :close-on-click-outside="true"
+      <NoteDeleteModal
         v-if="showDeleteModal"
+        @confirm="handleConfirmDelete"
         @close="showDeleteModal = false"
-      >
-        <div class="flex flex-col gap-6 w-full text-left">
-          <div class="flex flex-col gap-2">
-            <div
-              class="w-12 h-12 bg-[#D32F2F]/10 rounded-2xl flex items-center justify-center mb-1"
-            >
-              <span
-                class="material-symbols-outlined text-[24px] text-[#D32F2F]"
-              >
-                delete_forever
-              </span>
-            </div>
-            <h3 class="text-xl font-bold text-black leading-tight">
-              ¿Eliminar nota?
-            </h3>
-            <p class="text-black/60 font-medium text-[14px] leading-relaxed">
-              Esta acción es
-              <span class="font-bold text-black">permanente e irreversible</span
-              >. La nota desaparecerá por completo de tu sistema.
-            </p>
-          </div>
-
-          <div class="flex items-center justify-end gap-3 mt-2">
-            <Button variant="ghost" @click="showDeleteModal = false">
-              Cancelar
-            </Button>
-            <Button
-              class="bg-[#D32F2F]! text-white! hover:bg-[#B71C1C]!"
-              @click="handleConfirmDelete"
-            >
-              Sí, eliminar
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      />
 
       <StatusModal
         :show="exportStatus.show"
@@ -414,6 +483,17 @@ const downloadNote = async () => {
         :title="exportStatus.title"
         :message="exportStatus.message"
         @close="exportStatus.show = false"
+      />
+
+      <NoteTagModal
+        v-if="showTagModal"
+        :tags="note.tags"
+        :all-tags="allTags"
+        v-model:new-tag="newTag"
+        @add-tag="addTag"
+        @remove-tag="removeTag"
+        @clear-tags="clearAllTags"
+        @close="showTagModal = false"
       />
     </Teleport>
   </motion.article>
