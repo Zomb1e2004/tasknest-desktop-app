@@ -14,12 +14,14 @@ const props = withDefaults(
     index?: number;
     showOptions?: boolean;
     showVisits?: boolean;
+    showPin?: boolean;
     dateType?: "createdAt" | "updatedAt" | "both";
   }>(),
   {
     index: 0,
     showOptions: false,
     showVisits: false,
+    showPin: true,
     dateType: "updatedAt",
   },
 );
@@ -199,7 +201,7 @@ const downloadNote = async () => {
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
     class="group relative bg-white border border-black/10 rounded-3xl p-4.5 flex flex-col gap-6 shadow-sm hover:shadow-lg hover:border-black/20 transition-all duration-300 cursor-pointer overflow-hidden"
-    :class="{ 'border-black/30 bg-black/1!': note.isPinned }"
+    :class="{ 'border-black/30 bg-black/1!': note.isPinned && showPin }"
   >
     <div
       class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 to-transparent"
@@ -232,6 +234,7 @@ const downloadNote = async () => {
           class="relative flex items-center gap-1 options-container"
         >
           <button
+            v-if="showPin"
             @click.stop="handleTogglePin"
             class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg transition-all"
             :class="

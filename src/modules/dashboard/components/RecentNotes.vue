@@ -98,6 +98,7 @@ const emit = defineEmits<{
         :note="note"
         :index="index"
         :show-options="true"
+        :show-pin="false"
         :class="isGridView ? 'w-full shrink-0' : 'w-full shrink-0'"
         @delete="emit('delete', $event)"
         @click="handleSelectNote(note)"
