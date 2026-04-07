@@ -11,6 +11,7 @@ export interface BaseEntity {
   id: string;
   createdAt: number;
   updatedAt: number;
+  lastSeen?: number;
 }
 
 export abstract class BaseService<
@@ -44,12 +45,12 @@ export abstract class BaseService<
 
   async getAll(): Promise<T[]> {
     const db = await this.getDB();
-    return db.getAll(this.storeName);
+    return (await db.getAll(this.storeName)) as T[];
   }
 
   async getById(id: StoreKey<DBS, StoreName>): Promise<T | undefined> {
     const db = await this.getDB();
-    return db.get(this.storeName, id);
+    return (await db.get(this.storeName, id)) as T | undefined;
   }
 
   async create(data: Omit<T, "id" | "createdAt" | "updatedAt">): Promise<T> {
@@ -62,6 +63,7 @@ export abstract class BaseService<
       id: crypto.randomUUID(),
       createdAt: now,
       updatedAt: now,
+      lastSeen: now,
     } as T;
 
     await db.put(this.storeName, entity);
@@ -72,16 +74,18 @@ export abstract class BaseService<
   async update(
     id: StoreKey<DBS, StoreName>,
     partial: Partial<T>,
+    updateTimestamp = true,
   ): Promise<T | null> {
     const db = await this.getDB();
 
-    const existing = await db.get(this.storeName, id);
+    const existing = (await db.get(this.storeName, id)) as T | undefined;
     if (!existing) return null;
 
     const updated = {
       ...existing,
       ...partial,
-      updatedAt: Date.now(),
+      updatedAt: updateTimestamp ? Date.now() : existing.updatedAt,
+      lastSeen: Date.now(),
     } as T;
 
     await db.put(this.storeName, updated);

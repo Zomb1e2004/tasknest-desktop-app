@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Modal from "../../../shared/components/Modal.vue";
-import Button from "../../../shared/components/Button.vue";
+import Modal from "./Modal.vue";
+import Button from "./Button.vue";
 
 defineProps<{
   modelValue: string;
@@ -37,7 +37,9 @@ const emit = defineEmits<{
       <div class="flex flex-col gap-2">
         <input
           :value="modelValue"
-          @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+          @input="
+            emit('update:modelValue', ($event.target as HTMLInputElement).value)
+          "
           type="text"
           placeholder="Nombre de la etiqueta..."
           class="w-full px-4 py-3 bg-black/5 border border-black/10 rounded-xl text-sm font-bold text-black placeholder:text-black/30 focus:outline-hidden focus:border-black/20 transition-all"

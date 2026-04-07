@@ -13,6 +13,7 @@ const handleLinkClick = () => {
 const menuItems = [
   { name: "Dashboard", path: "/dashboard", icon: "dashboard" },
   { name: "Notas", path: "/notes", icon: "description" },
+  { name: "Tareas", path: "/tasks", icon: "check_circle" },
 ];
 </script>
 
@@ -71,7 +72,7 @@ const menuItems = [
       </div>
     </div>
 
-    <nav class="flex-1 flex flex-col space-y-2.5">
+    <nav class="flex-1 flex flex-col space-y-3">
       <RouterLink
         v-for="item in menuItems"
         :key="item.path"

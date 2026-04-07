@@ -5,7 +5,7 @@ const savedOption = localStorage.getItem("notes_sortOption") || "updatedAt";
 const savedOrder = localStorage.getItem("notes_sortOrder") || "desc";
 
 const sortOption = ref(savedOption);
-const sortOrder = ref(savedOrder);
+const sortOrder = ref<"asc" | "desc">(savedOrder as "asc" | "desc");
 
 watch(sortOption, (newVal) => {
   localStorage.setItem("notes_sortOption", newVal);
@@ -34,7 +34,8 @@ export const useNotesSort = () => {
 
         if (
           sortOption.value === "createdAt" ||
-          sortOption.value === "updatedAt"
+          sortOption.value === "updatedAt" ||
+          sortOption.value === "lastSeen"
         ) {
           const timeA = Number(valA);
           const timeB = Number(valB);

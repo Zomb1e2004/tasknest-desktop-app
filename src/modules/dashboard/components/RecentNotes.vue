@@ -85,7 +85,7 @@ const emit = defineEmits<{
       v-if="notes.length > 0"
       layout
       :class="[
-        'gap-6',
+        'gap-3.5',
         isGridView
           ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
           : 'flex flex-col items-stretch',
@@ -93,13 +93,14 @@ const emit = defineEmits<{
     >
       <NoteCard
         v-for="(note, index) in notes.slice(0, maxNotes)"
-        date-type="updatedAt"
+        :show-date="false"
         :key="note.id"
         :note="note"
         :index="index"
         :show-options="false"
         :show-tags="false"
         :show-pin="false"
+        :show-last-seen="true"
         :class="isGridView ? 'w-full shrink-0' : 'w-full shrink-0'"
         @delete="emit('delete', $event)"
         @click="handleSelectNote(note)"

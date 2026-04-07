@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import type { Note } from "../models/NoteModel";
 import ActionFooter from "../../../shared/components/ActionFooter.vue";
@@ -20,6 +20,12 @@ const noteContent = ref(note?.content ?? "");
 const originalTitle = ref(note?.title ?? "");
 const originalContent = ref(note?.content ?? "");
 const isSaving = ref(false);
+
+onMounted(() => {
+  if (note?.id) {
+    noteService.markAsSeen(note.id);
+  }
+});
 
 const hasChanges = computed(() => {
   return (

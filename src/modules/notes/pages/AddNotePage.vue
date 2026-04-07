@@ -36,7 +36,7 @@ const handleSave = async () => {
       title: noteTitle.value,
       content: noteContent.value,
       tags: [],
-      totalVisits: 0,
+      totalVisits: 1,
       format: format,
     });
 

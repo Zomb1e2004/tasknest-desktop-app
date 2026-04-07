@@ -49,9 +49,17 @@ class NoteService extends BaseService<AppDB, "notes", Note> {
     const note = await this.getById(id);
     if (!note) return null;
 
-    return this.update(id, {
-      totalVisits: (note.totalVisits ?? 0) + 1,
-    });
+    return this.update(
+      id,
+      {
+        totalVisits: (note.totalVisits ?? 0) + 1,
+      },
+      false,
+    );
+  }
+
+  async markAsSeen(id: string): Promise<Note | null> {
+    return this.update(id, { lastSeen: Date.now() }, false);
   }
 
   async getRecent(): Promise<Note[]> {

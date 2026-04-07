@@ -4,9 +4,9 @@ import { motion } from "motion-v";
 import type { Note } from "../models/NoteModel";
 import StatusModal from "../../../shared/components/StatusModal.vue";
 import { noteService } from "../services/NoteService";
-import { tagService } from "../services/TagService";
+import { tagService } from "../../../shared/services/TagService";
 import { useToast } from "../../../shared/composables/useToast";
-import type { Tag } from "../models/TagModel";
+import type { Tag } from "../../../shared/models/TagModel";
 import NoteExportModal from "./NoteExportModal.vue";
 import NoteDeleteModal from "./NoteDeleteModal.vue";
 import NoteTagModal from "./NoteTagModal.vue";
@@ -20,6 +20,8 @@ const props = withDefaults(
     showVisits?: boolean;
     showPin?: boolean;
     showTags?: boolean;
+    showDate?: boolean;
+    showLastSeen?: boolean;
     dateType?: "createdAt" | "updatedAt" | "both";
   }>(),
   {
@@ -28,6 +30,8 @@ const props = withDefaults(
     showVisits: false,
     showPin: true,
     showTags: true,
+    showDate: true,
+    showLastSeen: false,
     dateType: "updatedAt",
   },
 );
@@ -40,11 +44,17 @@ const emit = defineEmits<{
 
 const { addToast } = useToast();
 
-const getRelativeTime = (date: number, type: "createdAt" | "updatedAt") => {
+const getRelativeTime = (
+  date: number,
+  type: "createdAt" | "updatedAt" | "lastSeen",
+) => {
   const diffMs = Date.now() - date;
   const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
 
-  const prefix = type === "createdAt" ? "Creado" : "Actualizado";
+  let prefix = "";
+  if (type === "createdAt") prefix = "Creado";
+  else if (type === "updatedAt") prefix = "Actualizado";
+  else prefix = "Visto";
 
   if (diffHrs < 1) return `${prefix} hace poco`;
   if (diffHrs < 24) return `${prefix} hace ${diffHrs}h`;
@@ -52,7 +62,10 @@ const getRelativeTime = (date: number, type: "createdAt" | "updatedAt") => {
   const diffDays = Math.floor(diffHrs / 24);
   if (diffDays < 7) return `${prefix} hace ${diffDays}d`;
 
-  return `${prefix} el ${new Date(date).toLocaleDateString("es-ES", { month: "short", day: "numeric" })}`;
+  return `${prefix} el ${new Date(date).toLocaleDateString("es-ES", {
+    month: "short",
+    day: "numeric",
+  })}`;
 };
 
 const isOptionsOpen = ref(false);
@@ -343,7 +356,6 @@ const downloadNote = async () => {
           </div>
         </div>
 
-        <!-- ✅ Solo botones, sin el div relative que envolvía el dropdown -->
         <div
           v-if="showOptions"
           class="flex items-center gap-1 options-container"
@@ -367,7 +379,6 @@ const downloadNote = async () => {
             </span>
           </button>
 
-          <!-- ✅ ref agregado aquí -->
           <button
             ref="optionsButtonRef"
             @click.stop="toggleOptions"
@@ -382,7 +393,7 @@ const downloadNote = async () => {
       </div>
 
       <p
-        class="text-[14px] text-black/55 leading-relaxed font-medium line-clamp-3 group-hover:text-black/70 transition-colors"
+        class="text-[12px] text-black/55 leading-relaxed font-medium line-clamp-2 group-hover:text-black/70 transition-colors"
       >
         {{ note.content }}
       </p>
@@ -407,9 +418,13 @@ const downloadNote = async () => {
     </div>
 
     <div
-      class="relative z-10 border-t border-black/5 pt-4 flex items-center justify-between gap-4"
+      v-if="showDate || showVisits || (showLastSeen && note.lastSeen)"
+      class="relative z-10 border-t border-black/5 pt-2.5 flex items-center justify-between gap-4"
     >
-      <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+      <div
+        v-if="showDate || (showLastSeen && note.lastSeen)"
+        class="flex flex-wrap items-center gap-x-4 gap-y-1"
+      >
         <template v-if="dateType === 'both'">
           <div class="flex items-center gap-1.5">
             <span class="material-symbols-outlined text-[14px] text-black/30">
@@ -431,15 +446,32 @@ const downloadNote = async () => {
         </template>
 
         <template v-else>
-          <div class="flex items-center gap-1.5">
+          <div v-if="showDate" class="flex items-center gap-1.5">
             <span class="material-symbols-outlined text-[14px] text-black/30">
               calendar_today
             </span>
             <span class="text-[11.5px] font-bold text-black/50">
-              {{ getRelativeTime(note[dateType], dateType) }}
+              {{
+                getRelativeTime(
+                  note[dateType as "createdAt" | "updatedAt"],
+                  dateType as "createdAt" | "updatedAt",
+                )
+              }}
             </span>
           </div>
         </template>
+
+        <div
+          v-if="showLastSeen && note.lastSeen"
+          class="flex items-center gap-1.5"
+        >
+          <span class="material-symbols-outlined text-[14px] text-black/30">
+            visibility
+          </span>
+          <span class="text-[11px] font-medium text-black/40">
+            {{ getRelativeTime(note.lastSeen, "lastSeen") }}
+          </span>
+        </div>
       </div>
 
       <div

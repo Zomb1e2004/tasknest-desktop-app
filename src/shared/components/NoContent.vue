@@ -9,14 +9,14 @@ withDefaults(
   }>(),
   {
     icon: "done_all",
-  }
+  },
 );
 </script>
 
 <template>
   <motion.div
-    :initial="{ opacity: 0, y: 10 }"
-    :animate="{ opacity: 1, y: 0 }"
+    :initial="{ opacity: 0 }"
+    :animate="{ opacity: 1 }"
     :transition="{ duration: 0.4, ease: 'easeOut' }"
     class="flex flex-col items-center justify-center py-6 gap-3 text-center"
   >
