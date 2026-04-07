@@ -1,7 +1,7 @@
 import type { DBSchema, IDBPDatabase } from "idb";
 import { BaseService } from "../../../shared/services/BaseService";
 import type { Note } from "../models/NoteModel";
-import type { Tag } from "../models/TagModel";
+import type { Tag } from "../../../shared/models/TagModel";
 
 export interface AppDB extends DBSchema {
   notes: {

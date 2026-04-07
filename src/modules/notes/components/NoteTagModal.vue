@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Modal from "../../../shared/components/Modal.vue";
 import Button from "../../../shared/components/Button.vue";
-import type { Tag } from "../models/TagModel";
+import type { Tag } from "../../../shared/models/TagModel";
 
 defineProps<{
   tags: string[];

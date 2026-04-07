@@ -2,12 +2,12 @@
 import Modal from "../../../shared/components/Modal.vue";
 import Button from "../../../shared/components/Button.vue";
 
-const props = defineProps<{
+defineProps<{
   show: boolean;
   targetFormat: "md" | "txt";
 }>();
 
-const emit = defineEmits<{
+defineEmits<{
   (e: "close"): void;
   (e: "confirm"): void;
 }>();

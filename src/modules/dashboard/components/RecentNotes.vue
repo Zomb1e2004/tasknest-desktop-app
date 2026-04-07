@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { watch } from "vue";
 import { motion } from "motion-v";
 import type { Note } from "../../notes/models/NoteModel";
 import NoContent from "../../../shared/components/NoContent.vue";
@@ -13,7 +13,7 @@ import { useDashboardView } from "../composables/useDashboardView";
 
 const router = useRouter();
 const { addToast } = useToast();
-const { isDashboardGridView: isGridView, toggleDashboardView } = useDashboardView();
+const { isDashboardGridView: isGridView } = useDashboardView();
 
 watch(isGridView, (newVal) => {
   addToast({
