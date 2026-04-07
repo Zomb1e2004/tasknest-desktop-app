@@ -9,14 +9,13 @@ import { useRouter } from "vue-router";
 
 import { noteService } from "../../notes/services/NoteService";
 
+import { useDashboardView } from "../composables/useDashboardView";
+
 const router = useRouter();
 const { addToast } = useToast();
-
-const savedView = localStorage.getItem("isGridView_RecentNotes");
-const isGridView = ref(savedView ? JSON.parse(savedView) : true);
+const { isDashboardGridView: isGridView, toggleDashboardView } = useDashboardView();
 
 watch(isGridView, (newVal) => {
-  localStorage.setItem("isGridView_RecentNotes", JSON.stringify(newVal));
   addToast({
     title: "Vista actualizada",
     message: newVal

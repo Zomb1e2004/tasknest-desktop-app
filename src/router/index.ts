@@ -8,6 +8,8 @@ import AddNotePage from "../modules/notes/pages/AddNotePage.vue";
 import UpdateNotePage from "../modules/notes/pages/UpdateNotePage.vue";
 
 import TasksPage from "../modules/tasks/pages/TasksPage.vue";
+import ProfilePage from "../modules/profile/pages/ProfilePage.vue";
+import SettingsPage from "../modules/settings/pages/SettingsPage.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -38,6 +40,16 @@ const routes: RouteRecordRaw[] = [
     path: "/tasks",
     name: "tasks",
     component: TasksPage,
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfilePage,
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: SettingsPage,
   },
 ];
 

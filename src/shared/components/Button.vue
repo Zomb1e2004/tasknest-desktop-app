@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
   icon?: string;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "ghost" | "custom";
   fullWidth?: boolean;
   disabled?: boolean;
 }

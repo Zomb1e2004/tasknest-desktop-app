@@ -38,6 +38,7 @@ const handleSave = async () => {
       tags: [],
       totalVisits: 1,
       format: format,
+      isPinned: false
     });
 
     addToast({

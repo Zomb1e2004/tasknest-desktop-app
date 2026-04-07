@@ -6,7 +6,10 @@ import { useRouter } from "vue-router";
 import { noteService } from "../../modules/notes/services/NoteService";
 import type { Note } from "../../modules/notes/models/NoteModel";
 
+import { useUser } from "../composables/useUser";
+
 const { addToast } = useToast();
+const { userName, profilePicture } = useUser();
 const router = useRouter();
 const isSidebarOpen = defineModel<boolean>("isSidebarOpen");
 const notes = ref<Note[]>([]);
@@ -245,17 +248,53 @@ watch(isSearchOpen, (open) => {
       </div>
     </div>
 
-    <div class="hidden md:flex flex-col items-end gap-1 select-none pr-2">
-      <span
-        class="text-lg font-black text-black/90 tracking-tighter leading-none tabular-nums"
+    <div class="hidden md:flex items-center gap-6 divide-x divide-black/5">
+      <div class="flex flex-col items-end gap-1 select-none pr-2">
+        <span
+          class="text-lg font-black text-black/90 tracking-tighter leading-none tabular-nums"
+        >
+          {{ formattedTime }}
+        </span>
+        <span
+          class="text-[17px] text-black/40 font-bold uppercase tracking-widest leading-none"
+        >
+          {{ formattedDay }}
+        </span>
+      </div>
+
+      <div
+        @click="router.push('/profile')"
+        class="flex items-center gap-3 pr-2.5 pl-4 py-1.5 bg-black/7 hover:bg-black/8 rounded-2xl transition-all duration-300 group cursor-pointer border border-transparent hover:border-black/5"
       >
-        {{ formattedTime }}
-      </span>
-      <span
-        class="text-[17px] text-black/40 font-bold uppercase tracking-widest leading-none"
-      >
-        {{ formattedDay }}
-      </span>
+        <div class="flex flex-col items-end">
+          <span
+            class="text-sm font-black text-black/80 truncate max-w-[140px]"
+          >
+            {{ userName || "Invitado" }}
+          </span>
+          <span
+            class="text-[10px] font-bold text-black/30 uppercase tracking-widest"
+          >
+            Mi Perfil
+          </span>
+        </div>
+
+        <div
+          class="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] bg-black/5 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)]"
+        >
+          <img
+            v-if="profilePicture"
+            :src="profilePicture"
+            class="w-full h-full object-cover"
+          />
+          <span
+            v-else
+            class="material-symbols-outlined text-black/20 text-[24px]"
+          >
+            person
+          </span>
+        </div>
+      </div>
     </div>
   </header>
 </template>

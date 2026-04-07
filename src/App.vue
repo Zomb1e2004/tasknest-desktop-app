@@ -15,7 +15,6 @@ const showWelcomeModal = ref(false);
 onMounted(() => {
   window.addEventListener("keydown", (e) => {
     if (
-      e.key === "F12" ||
       (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") ||
       (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "c") ||
       (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j")
