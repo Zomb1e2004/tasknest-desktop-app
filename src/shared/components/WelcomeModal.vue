@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useUser } from "../composables/useUser";
+import { getGreeting } from "../utils/getGreeting";
 import Modal from "./Modal.vue";
 import Button from "./Button.vue";
-import { getGreeting } from "../utils/getGreeting";
-
+ 
 const emit = defineEmits<{
   (e: "save", name: string): void;
 }>();
-
+ 
+const { setRegisteredAt } = useUser();
 const inputName = ref("");
-
+ 
 const handleSave = () => {
   if (inputName.value.trim()) {
+    setRegisteredAt(new Date().toISOString());
     emit("save", inputName.value.trim());
   }
 };

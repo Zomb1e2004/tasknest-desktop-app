@@ -39,7 +39,7 @@ const completionPercentage = computed(() => {
             >{{ completedCount }}</span
           >
           <span
-            class="text-[10px] font-bold tracking-widest text-black/40 uppercase"
+            class="text-[10px] font-bold tracking-widest text-[#4caf50]/80 uppercase text-center"
             >Completados</span
           >
         </div>
@@ -50,13 +50,12 @@ const completionPercentage = computed(() => {
             >{{ pendingCount }}</span
           >
           <span
-            class="text-[10px] font-bold tracking-widest text-black/40 uppercase"
+            class="text-[10px] font-bold tracking-widest text-[#f59e0b]/80 uppercase text-center"
             >Pendientes</span
           >
         </div>
       </div>
 
-      <!-- Barra de porcentaje -->
       <div class="w-full flex flex-col gap-3 items-center">
         <div class="w-full h-1.5 bg-black/5 rounded-full overflow-hidden">
           <div

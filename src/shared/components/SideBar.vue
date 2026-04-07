@@ -13,6 +13,9 @@ const handleLinkClick = () => {
 const menuItems = [
   { name: "Dashboard", path: "/dashboard", icon: "dashboard" },
   { name: "Notas", path: "/notes", icon: "description" },
+  { name: "Tareas", path: "/tasks", icon: "check_circle" },
+  { name: "Perfil", path: "/profile", icon: "account_circle" },
+  { name: "Ajustes", path: "/settings", icon: "settings" },
 ];
 </script>
 
@@ -54,9 +57,9 @@ const menuItems = [
               TaskNest!
             </h1>
             <div
-              class="inline-flex items-center px-1.5 py-0.5 bg-white/10 text-white/60 text-[8px] font-black rounded border border-white/5 tracking-wider uppercase"
+              class="inline-flex items-center px-1.5 py-0.5 bg-white/10 text-white/60 text-[11px] font-black rounded border border-white/5 tracking-wider uppercase w-fit"
             >
-              v0.1.5 <span class="mx-1 text-white/20">/</span> DEMO & TEST
+              v0.2.5
             </div>
           </div>
         </div>
@@ -71,7 +74,7 @@ const menuItems = [
       </div>
     </div>
 
-    <nav class="flex-1 flex flex-col space-y-2.5">
+    <nav class="flex-1 flex flex-col space-y-3">
       <RouterLink
         v-for="item in menuItems"
         :key="item.path"
@@ -97,7 +100,7 @@ const menuItems = [
       <p
         class="text-[13px] text-white/30 font-medium tracking-tight leading-relaxed"
       >
-        Creado por <br />
+        Creado con ❤️ por <br />
         <a
           href="https://www.linkedin.com/in/rodrigolauramoreno/"
           target="_blank"

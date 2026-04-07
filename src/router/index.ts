@@ -7,6 +7,10 @@ import NotesPage from "../modules/notes/pages/NotesPage.vue";
 import AddNotePage from "../modules/notes/pages/AddNotePage.vue";
 import UpdateNotePage from "../modules/notes/pages/UpdateNotePage.vue";
 
+import TasksPage from "../modules/tasks/pages/TasksPage.vue";
+import ProfilePage from "../modules/profile/pages/ProfilePage.vue";
+import SettingsPage from "../modules/settings/pages/SettingsPage.vue";
+
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
@@ -31,6 +35,21 @@ const routes: RouteRecordRaw[] = [
     path: "/notes/:id/edit",
     name: "update-note",
     component: UpdateNotePage,
+  },
+  {
+    path: "/tasks",
+    name: "tasks",
+    component: TasksPage,
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfilePage,
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: SettingsPage,
   },
 ];
 

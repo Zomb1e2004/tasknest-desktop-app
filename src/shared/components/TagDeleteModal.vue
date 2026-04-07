@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Modal from "../../../shared/components/Modal.vue";
-import Button from "../../../shared/components/Button.vue";
+import Modal from "./Modal.vue";
+import Button from "./Button.vue";
 import type { Tag } from "../models/TagModel";
 
 defineProps<{
@@ -15,10 +15,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <Modal
-    @close="emit('close')"
-    :close-on-click-outside="!isDeleting"
-  >
+  <Modal @close="emit('close')" :close-on-click-outside="!isDeleting">
     <div class="flex flex-col gap-6 w-full text-left font-['Manrope']">
       <div class="flex flex-col gap-2">
         <div
@@ -41,11 +38,7 @@ const emit = defineEmits<{
       </div>
 
       <div class="flex items-center justify-end gap-3 mt-2">
-        <Button
-          variant="ghost"
-          @click="emit('close')"
-          :disabled="isDeleting"
-        >
+        <Button variant="ghost" @click="emit('close')" :disabled="isDeleting">
           Cancelar
         </Button>
         <Button

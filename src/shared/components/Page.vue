@@ -5,7 +5,7 @@ import { motion } from "motion-v";
 <template>
   <motion.section
     id="page-container"
-    class="px-6 py-6 sm:px-10 sm:py-10 w-full flex-1 min-h-0 flex flex-col bg-white text-black select-none overflow-y-auto"
+    class="px-6 py-6 sm:px-7.5 sm:py-5 w-full flex-1 min-h-0 flex flex-col bg-white text-black select-none overflow-y-auto"
     layout
     :initial="{ opacity: 0, y: 0 }"
     :animate="{ opacity: 1, y: 0 }"

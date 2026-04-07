@@ -1,7 +1,7 @@
 import type { DBSchema, IDBPDatabase } from "idb";
 import { BaseService } from "../../../shared/services/BaseService";
 import type { Note } from "../models/NoteModel";
-import type { Tag } from "../models/TagModel";
+import type { Tag } from "../../../shared/models/TagModel";
 
 export interface AppDB extends DBSchema {
   notes: {
@@ -49,9 +49,17 @@ class NoteService extends BaseService<AppDB, "notes", Note> {
     const note = await this.getById(id);
     if (!note) return null;
 
-    return this.update(id, {
-      totalVisits: (note.totalVisits ?? 0) + 1,
-    });
+    return this.update(
+      id,
+      {
+        totalVisits: (note.totalVisits ?? 0) + 1,
+      },
+      false,
+    );
+  }
+
+  async markAsSeen(id: string): Promise<Note | null> {
+    return this.update(id, { lastSeen: Date.now() }, false);
   }
 
   async getRecent(): Promise<Note[]> {

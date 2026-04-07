@@ -6,5 +6,6 @@ export interface Note extends BaseEntity {
   tags: string[];
   totalVisits: number;
   format: "md" | "txt";
-  isPinned?: boolean;
+  isPinned: boolean;
+  lastSeen?: number;
 }

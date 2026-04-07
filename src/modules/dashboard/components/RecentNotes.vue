@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { watch } from "vue";
 import { motion } from "motion-v";
 import type { Note } from "../../notes/models/NoteModel";
 import NoContent from "../../../shared/components/NoContent.vue";
@@ -9,14 +9,13 @@ import { useRouter } from "vue-router";
 
 import { noteService } from "../../notes/services/NoteService";
 
+import { useDashboardView } from "../composables/useDashboardView";
+
 const router = useRouter();
 const { addToast } = useToast();
-
-const savedView = localStorage.getItem("isGridView_RecentNotes");
-const isGridView = ref(savedView ? JSON.parse(savedView) : true);
+const { isDashboardGridView: isGridView } = useDashboardView();
 
 watch(isGridView, (newVal) => {
-  localStorage.setItem("isGridView_RecentNotes", JSON.stringify(newVal));
   addToast({
     title: "Vista actualizada",
     message: newVal
@@ -85,7 +84,7 @@ const emit = defineEmits<{
       v-if="notes.length > 0"
       layout
       :class="[
-        'gap-6',
+        'gap-3.5',
         isGridView
           ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
           : 'flex flex-col items-stretch',
@@ -93,13 +92,14 @@ const emit = defineEmits<{
     >
       <NoteCard
         v-for="(note, index) in notes.slice(0, maxNotes)"
-        date-type="updatedAt"
+        :show-date="false"
         :key="note.id"
         :note="note"
         :index="index"
         :show-options="false"
         :show-tags="false"
         :show-pin="false"
+        :show-last-seen="true"
         :class="isGridView ? 'w-full shrink-0' : 'w-full shrink-0'"
         @delete="emit('delete', $event)"
         @click="handleSelectNote(note)"

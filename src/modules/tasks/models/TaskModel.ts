@@ -1,10 +1,9 @@
-export interface Task {
-  id: string;
+import type { BaseEntity } from "../../../shared/services/BaseService";
+
+export interface Task extends BaseEntity {
   title: string;
   description: string;
   completed: boolean;
-  priority: "high" | "medium" | "low";
-  tag: string;
-  dueDate: string;
-  createdAt: string;
+  priority: "Alto" | "Medio" | "Bajo";
+  tags: string[];
 }

@@ -15,32 +15,26 @@ const showWelcomeModal = ref(false);
 onMounted(() => {
   window.addEventListener("keydown", (e) => {
     if (
-      e.key === "F5" ||
-      (e.ctrlKey && e.key === "r") ||
-      (e.ctrlKey && e.shiftKey && e.key === "I")
+      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") ||
+      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "c") ||
+      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j")
     ) {
       e.preventDefault();
     }
   });
 
-  window.addEventListener("mouseup", (e) => {
-    if (e.button === 3 || e.button === 4) {
-      e.preventDefault();
-    }
-  });
-
-  window.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-  });
-
   if (!userName.value) {
     showWelcomeModal.value = true;
   } else {
-    addToast({
-      title: `¡${getGreeting()}!`,
-      message: `¡Hola de nuevo, ${userName.value}! Qué bueno verte por aquí.`,
-      type: "success",
-    });
+    const welcomeShown = sessionStorage.getItem("welcome-shown");
+    if (!welcomeShown) {
+      addToast({
+        title: `¡${getGreeting()}!`,
+        message: `¡Hola de nuevo, ${userName.value}! Qué bueno verte por aquí.`,
+        type: "success",
+      });
+      sessionStorage.setItem("welcome-shown", "true");
+    }
   }
 });
 
