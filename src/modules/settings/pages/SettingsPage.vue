@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import Page from "../../../shared/components/Page.vue";
 import { useUser } from "../../../shared/composables/useUser";
-// import { useToast } from "../../../shared/composables/useToast";
+import { useToast } from "../../../shared/composables/useToast";
 import { motion } from "motion-v";
 import { getWordByIndex } from "../../../shared/utils/getWordByIndex";
-// import Button from "../../../shared/components/Button.vue";
-// import { ref } from "vue";
-// import Modal from "../../../shared/components/Modal.vue";
+import Button from "../../../shared/components/Button.vue";
+import { ref } from "vue";
+import Modal from "../../../shared/components/Modal.vue";
+import PasswordSetupFields from "../../../shared/components/PasswordSetupFields.vue";
 // import { deleteDB } from "idb";
 
 // View Composables
@@ -15,10 +16,85 @@ import { useNotesView } from "../../notes/composables/useNotesView";
 import { useTasksView } from "../../tasks/composables/useTasksView";
 import { useTheme } from "../../../shared/composables/useTheme";
 import { useSketchPreview } from "../../sketches/composables/useSketchPreview";
+import {
+  useSecurity,
+  MIN_PASSWORD_LENGTH,
+} from "../../../shared/composables/useSecurity";
 
 const { userName } = useUser();
 const { theme, setTheme } = useTheme();
 const { showPreview } = useSketchPreview();
+const { addToast } = useToast();
+const {
+  secureEnabled,
+  setSecureEnabled,
+  hasPassword,
+  verifyPassword,
+  setPassword,
+} = useSecurity();
+
+const { isDashboardGridView } = useDashboardView();
+const { isGridView: isNotesGridView } = useNotesView();
+const { isGridView: isTasksGridView } = useTasksView();
+
+// --- Inicio seguro ---
+const showCreatePwModal = ref(false);
+const showDisableModal = ref(false);
+const newPw = ref("");
+const newPwConfirm = ref("");
+const currentPw = ref("");
+const disableError = ref("");
+
+const canCreatePw =
+  () =>
+    newPw.value.length >= MIN_PASSWORD_LENGTH &&
+    newPw.value === newPwConfirm.value;
+
+const handleSecureToggle = () => {
+  if (secureEnabled.value) {
+    disableError.value = "";
+    currentPw.value = "";
+    showDisableModal.value = true;
+  } else if (hasPassword()) {
+    setSecureEnabled(true);
+    addToast({
+      title: "Inicio seguro activado",
+      message: "Se pedirá tu contraseña en cada acceso.",
+      type: "success",
+    });
+  } else {
+    newPw.value = "";
+    newPwConfirm.value = "";
+    showCreatePwModal.value = true;
+  }
+};
+
+const confirmCreatePw = async () => {
+  if (!canCreatePw()) return;
+  await setPassword(newPw.value);
+  setSecureEnabled(true);
+  showCreatePwModal.value = false;
+  addToast({
+    title: "Inicio seguro activado",
+    message: "Contraseña creada. Se pedirá en cada acceso.",
+    type: "success",
+  });
+};
+
+const confirmDisable = async () => {
+  if (await verifyPassword(currentPw.value)) {
+    setSecureEnabled(false);
+    showDisableModal.value = false;
+    addToast({
+      title: "Inicio seguro desactivado",
+      message: "Ya no se pedirá contraseña al acceder.",
+      type: "success",
+    });
+  } else {
+    disableError.value = "Contraseña incorrecta.";
+  }
+};
+
 // const isConfirmModalOpen = ref(false);
 
 // const handleResetData = () => {
@@ -189,6 +265,55 @@ const { showPreview } = useSketchPreview();
                 <span class="text-sm font-bold">Ocultar</span>
               </div>
             </div>
+          </div>
+        </motion.div>
+
+        <!-- Inicio seguro Card -->
+        <motion.div
+          :initial="{ opacity: 0, x: 0 }"
+          :animate="{ opacity: 1, x: 0 }"
+          class="bg-white/60 dark:bg-neutral-900/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-8"
+        >
+          <div class="flex flex-col gap-2">
+            <h3 class="font-black text-2xl text-black dark:text-white tracking-tight">
+              Inicio seguro
+            </h3>
+            <p class="text-sm font-medium text-black/40 dark:text-white/50">
+              Si está activado, se pedirá tu contraseña en cada acceso a la aplicación.
+            </p>
+          </div>
+
+          <div
+            class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-6 rounded-4xl border border-black/5 dark:border-white/10 bg-black/2 dark:bg-white/5"
+          >
+            <div class="flex items-center gap-4">
+              <span
+                class="material-symbols-outlined text-[32px]"
+                :class="secureEnabled ? 'text-green-600 dark:text-green-400' : 'text-black/30 dark:text-white/30'"
+              >
+                {{ secureEnabled ? "lock" : "lock_open" }}
+              </span>
+              <div class="flex flex-col gap-1">
+                <span class="text-sm font-bold text-black dark:text-white">
+                  {{ secureEnabled ? "Activado" : "Desactivado" }}
+                </span>
+                <span class="text-[12px] font-medium text-black/40 dark:text-white/50">
+                  {{
+                    secureEnabled
+                      ? "La app pedirá contraseña al abrirse."
+                      : "Acceso directo, sin contraseña."
+                  }}
+                </span>
+              </div>
+            </div>
+            <Button
+              :variant="secureEnabled ? 'secondary' : 'primary'"
+              :animate-icon="false"
+              :icon="secureEnabled ? 'lock_open' : 'lock'"
+              @click="handleSecureToggle"
+            >
+              {{ secureEnabled ? "Desactivar" : "Activar" }}
+            </Button>
           </div>
         </motion.div>
 
@@ -398,6 +523,58 @@ const { showPreview } = useSketchPreview();
       </div>
     </Modal> -->
 
+    <Teleport to="body">
+      <Modal v-if="showCreatePwModal" @close="showCreatePwModal = false">
+        <div class="flex flex-col gap-6 w-full text-left">
+          <div class="flex flex-col gap-2">
+            <div class="w-12 h-12 bg-black/5 dark:bg-white/10 rounded-2xl flex items-center justify-center mb-1">
+              <span class="material-symbols-outlined text-[24px] text-black dark:text-white">lock</span>
+            </div>
+            <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
+              Crear contraseña
+            </h3>
+            <p class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed">
+              Aún no tienes contraseña. Créala para activar el inicio seguro.
+            </p>
+          </div>
+          <PasswordSetupFields v-model:password="newPw" v-model:confirm="newPwConfirm" />
+          <div class="flex items-center justify-end gap-3">
+            <Button variant="ghost" @click="showCreatePwModal = false">Cancelar</Button>
+            <Button :disabled="!canCreatePw()" @click="confirmCreatePw">Guardar y activar</Button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal v-if="showDisableModal" @close="showDisableModal = false">
+        <div class="flex flex-col gap-6 w-full text-left">
+          <div class="flex flex-col gap-2">
+            <div class="w-12 h-12 bg-black/5 dark:bg-white/10 rounded-2xl flex items-center justify-center mb-1">
+              <span class="material-symbols-outlined text-[24px] text-black dark:text-white">lock_open</span>
+            </div>
+            <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
+              Desactivar inicio seguro
+            </h3>
+            <p class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed">
+              Ingresa tu contraseña actual para confirmar.
+            </p>
+          </div>
+          <input
+            v-model="currentPw"
+            type="password"
+            placeholder="Contraseña actual"
+            autocomplete="current-password"
+            class="w-full bg-black/5 dark:bg-white/10 text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 rounded-xl py-3.5 px-4 outline-none border transition-all text-sm font-medium"
+            :class="disableError ? 'border-red-500' : 'border-black/10 dark:border-white/10 focus:border-black/20 dark:focus:border-white/20'"
+            @keyup.enter="confirmDisable"
+          />
+          <p v-if="disableError" class="text-[13px] font-bold text-red-500">{{ disableError }}</p>
+          <div class="flex items-center justify-end gap-3">
+            <Button variant="ghost" @click="showDisableModal = false">Cancelar</Button>
+            <Button :disabled="!currentPw" @click="confirmDisable">Desactivar</Button>
+          </div>
+        </div>
+      </Modal>
+    </Teleport>
   </Page>
 </template>
 

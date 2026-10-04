@@ -6,6 +6,11 @@ import { useToast } from "../../../shared/composables/useToast";
 import { motion } from "motion-v";
 import { getWordByIndex } from "../../../shared/utils/getWordByIndex";
 import Button from "../../../shared/components/Button.vue";
+import PasswordSetupFields from "../../../shared/components/PasswordSetupFields.vue";
+import {
+  useSecurity,
+  MIN_PASSWORD_LENGTH,
+} from "../../../shared/composables/useSecurity";
 
 const {
   userName,
@@ -16,6 +21,40 @@ const {
   setBirthday,
 } = useUser();
 const { addToast } = useToast();
+const { hasPassword, verifyPassword, setPassword } = useSecurity();
+
+const hasPw = ref(hasPassword());
+const currentPw = ref("");
+const newPw = ref("");
+const newPwConfirm = ref("");
+const pwError = ref("");
+
+const canUpdatePw = computed(() => {
+  const freshValid =
+    newPw.value.length >= MIN_PASSWORD_LENGTH && newPw.value === newPwConfirm.value;
+  return hasPw.value ? currentPw.value.length > 0 && freshValid : freshValid;
+});
+
+const handlePasswordUpdate = async () => {
+  if (!canUpdatePw.value) return;
+  pwError.value = "";
+  if (hasPw.value && !(await verifyPassword(currentPw.value))) {
+    pwError.value = "La contraseña actual no es correcta.";
+    return;
+  }
+  await setPassword(newPw.value);
+  const wasUpdate = hasPw.value;
+  hasPw.value = true;
+  currentPw.value = "";
+  newPw.value = "";
+  newPwConfirm.value = "";
+  addToast({
+    title: wasUpdate ? "Contraseña actualizada" : "Contraseña creada",
+    message: "Tu contraseña se ha guardado correctamente.",
+    type: "success",
+  });
+};
+
 const localUserName = ref(userName.value);
 const localProfilePicture = ref(profilePicture.value);
 const localBirthday = ref(birthday.value);
@@ -265,6 +304,66 @@ const removePhoto = () => {
             </div>
           </motion.div>
 
+          <!-- Seguridad -->
+          <motion.div
+            class="w-full"
+            :initial="{ opacity: 0, x: 0 }"
+            :animate="{ opacity: 1, x: 0 }"
+          >
+            <div
+              class="bg-white/70 dark:bg-neutral-900/70 backdrop-blur-2xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-9"
+            >
+              <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-2 px-1">
+                  <span class="material-symbols-outlined text-[18px] text-black/40 dark:text-white/40">
+                    lock
+                  </span>
+                  <label class="text-[11px] font-black uppercase tracking-[0.18em] text-black/40 dark:text-white/40">
+                    Seguridad
+                  </label>
+                </div>
+                <p class="text-sm font-medium text-black/40 dark:text-white/40 px-1">
+                  {{
+                    hasPw
+                      ? "Cambia tu contraseña ingresando la actual."
+                      : "Aún no tienes contraseña. Crea una aquí."
+                  }}
+                </p>
+              </div>
+
+              <div class="flex flex-col gap-4">
+                <div v-if="hasPw" class="flex flex-col gap-3">
+                  <label class="text-[11px] font-black uppercase tracking-[0.18em] text-black/40 dark:text-white/40 px-1">
+                    Contraseña actual
+                  </label>
+                  <input
+                    v-model="currentPw"
+                    type="password"
+                    placeholder="Tu contraseña actual..."
+                    autocomplete="current-password"
+                    class="w-full px-6 py-4.5 bg-black/4 dark:bg-white/10 hover:bg-black/6 dark:hover:bg-white/10 border border-transparent rounded-3xl font-bold text-base text-black dark:text-white focus:bg-white dark:focus:bg-neutral-900 focus:border-black/10 dark:focus:border-white/15 focus:ring-[6px] focus:ring-black/5 dark:focus:ring-white/10 outline-none transition-all placeholder:text-black/25 dark:placeholder-white/40 tracking-tight"
+                  />
+                </div>
+
+                <PasswordSetupFields v-model:password="newPw" v-model:confirm="newPwConfirm" />
+
+                <p v-if="pwError" class="text-[13px] font-bold text-red-500 px-1">
+                  {{ pwError }}
+                </p>
+              </div>
+
+              <div class="pt-6 flex items-center justify-end border-t border-black/5 dark:border-white/10">
+                <Button
+                  icon="lock"
+                  :animate-icon="false"
+                  @click="handlePasswordUpdate"
+                  :disabled="!canUpdatePw"
+                >
+                  {{ hasPw ? "Actualizar contraseña" : "Crear contraseña" }}
+                </Button>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>
