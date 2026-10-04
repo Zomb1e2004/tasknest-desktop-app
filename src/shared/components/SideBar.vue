@@ -14,6 +14,7 @@ const menuItems = [
   { name: "Dashboard", path: "/dashboard", icon: "dashboard" },
   { name: "Notas", path: "/notes", icon: "description" },
   { name: "Tareas", path: "/tasks", icon: "check_circle" },
+  { name: "Trazos", path: "/sketches", icon: "brush" },
   { name: "Perfil", path: "/profile", icon: "account_circle" },
   { name: "Ajustes", path: "/settings", icon: "settings" },
 ];

@@ -14,9 +14,11 @@ import { useDashboardView } from "../../dashboard/composables/useDashboardView";
 import { useNotesView } from "../../notes/composables/useNotesView";
 import { useTasksView } from "../../tasks/composables/useTasksView";
 import { useTheme } from "../../../shared/composables/useTheme";
+import { useSketchPreview } from "../../sketches/composables/useSketchPreview";
 
 const { userName } = useUser();
 const { theme, setTheme } = useTheme();
+const { showPreview } = useSketchPreview();
 // const isConfirmModalOpen = ref(false);
 
 // const handleResetData = () => {
@@ -136,6 +138,55 @@ const { theme, setTheme } = useTheme();
               <div class="flex flex-col gap-1">
                 <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Tema</span>
                 <span class="text-sm font-bold">Oscuro</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <!-- Trazos Card -->
+        <motion.div
+          :initial="{ opacity: 0, x: 0 }"
+          :animate="{ opacity: 1, x: 0 }"
+          class="bg-white/60 dark:bg-neutral-900/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-8"
+        >
+          <div class="flex flex-col gap-2">
+            <h3 class="font-black text-2xl text-black dark:text-white tracking-tight">
+              Trazos
+            </h3>
+            <p class="text-sm font-medium text-black/40 dark:text-white/50">
+              Elige si se muestra la miniatura de cada dibujo guardado.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div
+              @click="showPreview = true"
+              class="flex items-center gap-4 p-6 rounded-4xl border transition-all cursor-pointer"
+              :class="
+                showPreview
+                  ? 'bg-black text-white border-black shadow-lg scale-[1.02] dark:bg-white dark:text-black dark:border-white'
+                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10'
+              "
+            >
+              <span class="material-symbols-outlined text-[32px]">image</span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Miniaturas</span>
+                <span class="text-sm font-bold">Mostrar</span>
+              </div>
+            </div>
+            <div
+              @click="showPreview = false"
+              class="flex items-center gap-4 p-6 rounded-4xl border transition-all cursor-pointer"
+              :class="
+                !showPreview
+                  ? 'bg-black text-white border-black shadow-lg scale-[1.02] dark:bg-white dark:text-black dark:border-white'
+                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10'
+              "
+            >
+              <span class="material-symbols-outlined text-[32px]">hide_image</span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Miniaturas</span>
+                <span class="text-sm font-bold">Ocultar</span>
               </div>
             </div>
           </div>

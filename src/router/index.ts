@@ -8,6 +8,8 @@ import AddNotePage from "../modules/notes/pages/AddNotePage.vue";
 import UpdateNotePage from "../modules/notes/pages/UpdateNotePage.vue";
 
 import TasksPage from "../modules/tasks/pages/TasksPage.vue";
+import SketchesPage from "../modules/sketches/pages/SketchesPage.vue";
+import SketchEditorPage from "../modules/sketches/pages/SketchEditorPage.vue";
 import ProfilePage from "../modules/profile/pages/ProfilePage.vue";
 import SettingsPage from "../modules/settings/pages/SettingsPage.vue";
 
@@ -40,6 +42,16 @@ const routes: RouteRecordRaw[] = [
     path: "/tasks",
     name: "tasks",
     component: TasksPage,
+  },
+  {
+    path: "/sketches",
+    name: "sketches",
+    component: SketchesPage,
+  },
+  {
+    path: "/sketches/:id/edit",
+    name: "sketch-editor",
+    component: SketchEditorPage,
   },
   {
     path: "/profile",

@@ -4,12 +4,14 @@ interface Props {
   variant?: "primary" | "secondary" | "ghost" | "custom";
   fullWidth?: boolean;
   disabled?: boolean;
+  animateIcon?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
   variant: "primary",
   fullWidth: false,
   disabled: false,
+  animateIcon: true,
 });
 </script>
 
@@ -41,7 +43,8 @@ withDefaults(defineProps<Props>(), {
   >
     <span
       v-if="icon"
-      class="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:rotate-90 group-active:scale-75"
+      class="material-symbols-outlined text-[18px]"
+      :class="animateIcon ? 'transition-transform duration-300 group-hover:rotate-90 group-active:scale-75' : ''"
       :data-icon="icon"
     >
       {{ icon }}
