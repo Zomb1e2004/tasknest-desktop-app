@@ -141,12 +141,12 @@ const handleSave = () => {
             <div
               :class="[
                 'w-5 h-5 border-2 rounded-md transition-all flex items-center justify-center',
-                completed ? 'bg-black border-black' : 'border-black/20 group-hover:border-black/40'
+                completed ? 'bg-black border-black dark:bg-white dark:border-white' : 'border-black/20 dark:border-white/15 group-hover:border-black/40 dark:group-hover:border-white/40'
               ]"
             >
-              <span v-if="completed" class="material-symbols-outlined text-[14px] text-white font-bold">check</span>
+              <span v-if="completed" class="material-symbols-outlined text-[14px] text-white dark:text-black font-bold">check</span>
             </div>
-            <span class="text-sm font-bold text-black/80">Marcar como completada</span>
+            <span class="text-sm font-bold text-black/80 dark:text-white/80">Marcar como completada</span>
           </button>
         </div>
       </div>

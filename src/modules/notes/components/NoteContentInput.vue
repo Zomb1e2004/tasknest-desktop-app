@@ -108,14 +108,35 @@ const handleKeydown = (e: KeyboardEvent) => {
 };
 
 const storageKey = computed(() =>
-  props.noteId ? `preview-mode-${props.noteId}` : "preview-mode-default",
+  props.noteId ? `preview-theme-override-${props.noteId}` : "preview-theme-override-default",
 );
 
-const isPreviewDark = ref(localStorage.getItem(storageKey.value) === "true");
+const { theme } = useTheme();
 
-watch(isPreviewDark, (newVal) => {
-  localStorage.setItem(storageKey.value, newVal.toString());
+// null = seguir el tema de la app; true/false = override manual del usuario.
+const storedOverride = localStorage.getItem(storageKey.value);
+const previewOverride = ref<boolean | null>(
+  storedOverride === "true" ? true : storedOverride === "false" ? false : null,
+);
+
+watch(previewOverride, (newVal) => {
+  if (newVal === null) {
+    localStorage.removeItem(storageKey.value);
+  } else {
+    localStorage.setItem(storageKey.value, newVal.toString());
+  }
 });
+
+// El preview coincide con el modo claro/oscuro salvo override explícito.
+const isPreviewDark = computed(
+  () => previewOverride.value ?? theme.value === "dark",
+);
+
+const togglePreviewTheme = () => {
+  const next = !isPreviewDark.value;
+  // Si el override iguala al tema global, volvemos a "seguir" para no desincronizar.
+  previewOverride.value = next === (theme.value === "dark") ? null : next;
+};
 
 const isFocused = ref(false);
 
@@ -349,7 +370,7 @@ onUnmounted(() => {
         :class="
           isPreviewDark
             ? 'bg-[#121212] border-white/10'
-            : 'bg-black/2 border-black/10'
+            : 'bg-[#fafafa] border-black/10'
         "
       >
         <div
@@ -388,7 +409,7 @@ onUnmounted(() => {
       <BadgeButton
         v-if="format === 'md'"
         :icon="isPreviewDark ? 'light_mode' : 'dark_mode'"
-        @click="isPreviewDark = !isPreviewDark"
+        @click="togglePreviewTheme"
       >
         {{
           isPreviewDark ? "Previsualización clara" : "Previsualización oscura"

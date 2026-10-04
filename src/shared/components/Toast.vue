@@ -66,13 +66,13 @@ const getAnimation = (h: string) => ({
             v-for="toast in groupedToasts[`${v}-${h}`] || []"
             :key="toast.id"
             v-bind="getAnimation(toast.horizontal || 'right')"
-            class="pointer-events-auto min-w-[320px] max-w-[400px] flex items-stretch bg-white border-2 border-black rounded-2xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] overflow-hidden font-['Manrope'] select-none relative"
+            class="pointer-events-auto min-w-[320px] max-w-[400px] flex items-stretch bg-white dark:bg-neutral-900 border-2 border-black dark:border-white/20 rounded-2xl shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.15)] overflow-hidden font-['Manrope'] select-none relative"
           >
             <div
               v-if="toast.showIcon !== false"
-              class="shrink-0 w-14 flex items-center justify-center border-r-2 border-black/5 bg-black/2"
+              class="shrink-0 w-14 flex items-center justify-center border-r-2 border-black/5 dark:border-white/10 bg-black/2 dark:bg-white/10"
             >
-              <span class="material-symbols-outlined text-[24px] text-black">
+              <span class="material-symbols-outlined text-[24px] text-black dark:text-white">
                 {{ getIcon(toast) }}
               </span>
             </div>
