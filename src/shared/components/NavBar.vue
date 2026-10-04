@@ -7,9 +7,11 @@ import { noteService } from "../../modules/notes/services/NoteService";
 import type { Note } from "../../modules/notes/models/NoteModel";
 
 import { useUser } from "../composables/useUser";
+import { useTheme } from "../composables/useTheme";
 
 const { addToast } = useToast();
 const { userName, profilePicture } = useUser();
+const { theme, toggleTheme } = useTheme();
 const router = useRouter();
 const isSidebarOpen = defineModel<boolean>("isSidebarOpen");
 const notes = ref<Note[]>([]);
@@ -153,12 +155,12 @@ watch(isSearchOpen, (open) => {
 
 <template>
   <header
-    class="h-20 sm:h-24 px-4 md:px-12 flex items-center justify-between bg-transparent backdrop-blur-md border-b border-black/10 sticky top-0 z-50 w-full font-['Manrope'] select-none gap-4"
+    class="h-20 sm:h-24 px-4 md:px-12 flex items-center justify-between bg-transparent backdrop-blur-md border-b border-black/10 dark:border-white/10 dark:bg-neutral-950/80 sticky top-0 z-50 w-full font-['Manrope'] select-none gap-4"
   >
     <div class="flex-1 max-w-2xl flex items-center gap-2 sm:gap-4">
       <button
         @click="isSidebarOpen = !isSidebarOpen"
-        class="flex items-center justify-center p-2 rounded-xl text-black/50 hover:text-black hover:bg-black/5 transition-colors cursor-pointer lg:hidden"
+        class="flex items-center justify-center p-2 rounded-xl text-black/50 hover:text-black hover:bg-black/5 dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10 transition-colors cursor-pointer lg:hidden"
         title="Menú"
       >
         <span class="material-symbols-outlined text-[24px] sm:text-[26px]"
@@ -168,7 +170,7 @@ watch(isSearchOpen, (open) => {
 
       <div ref="searchContainer" class="relative flex-1">
         <span
-          class="material-symbols-outlined text-black/50 absolute left-4 top-1/2 -translate-y-1/2 transition-colors focus-within:text-black text-[20px] sm:text-[22px]"
+          class="material-symbols-outlined text-black/50 dark:text-white/50 absolute left-4 top-1/2 -translate-y-1/2 transition-colors focus-within:text-black text-[20px] sm:text-[22px]"
         >
           search
         </span>
@@ -186,7 +188,7 @@ watch(isSearchOpen, (open) => {
           :placeholder="
             isMobile ? 'Buscar...' : 'Buscar rápidamente tareas o notas...'
           "
-          class="w-full bg-white hover:bg-black/5 focus:bg-black/5 text-black placeholder-black/50 rounded-2xl py-2.5 sm:py-3.5 pl-11 sm:pl-12 pr-4 sm:pr-16 outline-none border border-black focus:border-black focus:shadow-sm transition-all duration-300 text-sm font-medium"
+          class="w-full bg-white hover:bg-black/5 focus:bg-black/5 text-black placeholder-black/50 rounded-2xl py-2.5 sm:py-3.5 pl-11 sm:pl-12 pr-4 sm:pr-16 outline-none border border-black focus:border-black focus:shadow-sm transition-all duration-300 text-sm font-medium dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 dark:text-white dark:placeholder-white/40 dark:border-white/15 dark:focus:border-white/40"
         />
 
         <Teleport to="body">
@@ -202,18 +204,18 @@ watch(isSearchOpen, (open) => {
                 left: dropdownStyle.left,
                 width: dropdownStyle.width,
               }"
-              class="bg-white border border-black/10 rounded-2xl shadow-xl overflow-hidden z-100 select-none"
+              class="bg-white border border-black/10 rounded-2xl shadow-xl overflow-hidden z-100 select-none dark:bg-neutral-900 dark:border-white/15"
             >
               <div class="p-2 flex flex-col">
                 <div
                   v-for="note in filteredResults"
                   :key="'search-' + note.id"
                   @click="handleSelectNote(note)"
-                  class="flex items-center gap-3 p-3 hover:bg-black/5 rounded-xl transition-all cursor-pointer group"
+                  class="flex items-center gap-3 p-3 hover:bg-black/5 rounded-xl transition-all cursor-pointer group dark:hover:bg-white/10"
                 >
                   <!-- Icono -->
                   <div
-                    class="w-8 h-8 bg-black/5 rounded-lg flex items-center justify-center text-black/40 group-hover:bg-black group-hover:text-white transition-all"
+                    class="w-8 h-8 bg-black/5 rounded-lg flex items-center justify-center text-black/40 group-hover:bg-black group-hover:text-white transition-all dark:bg-white/10 dark:text-white/50 dark:group-hover:bg-white dark:group-hover:text-black"
                   >
                     <span class="material-symbols-outlined text-[18px]">
                       description
@@ -222,10 +224,10 @@ watch(isSearchOpen, (open) => {
 
                   <!-- Info -->
                   <div class="flex flex-col">
-                    <span class="text-sm font-bold text-black/80 truncate">
+                    <span class="text-sm font-bold text-black/80 truncate dark:text-white/90">
                       {{ note.title }}
                     </span>
-                    <span class="text-[11px] text-black/40 font-medium">
+                    <span class="text-[11px] text-black/40 font-medium dark:text-white/50">
                       {{ new Date(note.createdAt).toLocaleDateString("es-ES") }}
                     </span>
                   </div>
@@ -240,7 +242,7 @@ watch(isSearchOpen, (open) => {
           class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none"
         >
           <kbd
-            class="hidden sm:inline-flex items-center justify-center px-1.5 py-1 text-[10px] font-bold text-black/60 bg-black/10 rounded-md"
+            class="hidden sm:inline-flex items-center justify-center px-1.5 py-1 text-[10px] font-bold text-black/60 bg-black/10 rounded-md dark:text-white/60 dark:bg-white/10"
           >
             Ctrl + K
           </kbd>
@@ -248,39 +250,71 @@ watch(isSearchOpen, (open) => {
       </div>
     </div>
 
-    <div class="hidden md:flex items-center gap-6 divide-x divide-black/5">
-      <div class="flex flex-col items-end gap-1 select-none pr-2">
-        <span
-          class="text-lg font-black text-black/90 tracking-tighter leading-none tabular-nums"
-        >
-          {{ formattedTime }}
-        </span>
-        <span
-          class="text-[17px] text-black/40 font-bold uppercase tracking-widest leading-none"
-        >
-          {{ formattedDay }}
-        </span>
-      </div>
-
-      <div
-        @click="router.push('/profile')"
-        class="flex items-center gap-3 pr-2.5 pl-4 py-1.5 bg-black/7 hover:bg-black/8 rounded-2xl transition-all duration-300 group cursor-pointer border border-transparent hover:border-black/5"
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button
+        @click="toggleTheme"
+        class="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-2xl text-black/60 hover:text-black hover:bg-black/5 dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10 border border-transparent hover:border-black/10 dark:hover:border-white/10 transition-all cursor-pointer"
+        :title="theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
       >
-        <div class="flex flex-col items-end">
+        <span class="material-symbols-outlined text-[22px]">
+          {{ theme === "dark" ? "light_mode" : "dark_mode" }}
+        </span>
+      </button>
+
+      <div class="hidden md:flex items-center gap-6 divide-x divide-black/5 dark:divide-white/10">
+        <div class="flex flex-col items-end gap-1 select-none pr-2">
           <span
-            class="text-sm font-black text-black/80 truncate max-w-[140px]"
+            class="text-lg font-black text-black/90 dark:text-white/90 tracking-tighter leading-none tabular-nums"
           >
-            {{ userName || "Invitado" }}
+            {{ formattedTime }}
           </span>
           <span
-            class="text-[10px] font-bold text-black/30 uppercase tracking-widest"
+            class="text-[17px] text-black/40 dark:text-white/50 font-bold uppercase tracking-widest leading-none"
           >
-            Mi Perfil
+            {{ formattedDay }}
           </span>
         </div>
 
         <div
-          class="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] bg-black/5 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)]"
+          @click="router.push('/profile')"
+          class="flex items-center gap-3 pr-2.5 pl-4 py-1.5 bg-black/7 hover:bg-black/8 dark:bg-white/10 dark:hover:bg-white/15 rounded-2xl transition-all duration-300 group cursor-pointer border border-transparent hover:border-black/5 dark:hover:border-white/10"
+        >
+          <div class="flex flex-col items-end">
+            <span
+              class="text-sm font-black text-black/80 dark:text-white/90 truncate max-w-[140px]"
+            >
+              {{ userName || "Invitado" }}
+            </span>
+            <span
+              class="text-[10px] font-bold text-black/30 dark:text-white/40 uppercase tracking-widest"
+            >
+              Mi Perfil
+            </span>
+          </div>
+
+          <div
+            class="w-11 h-11 rounded-full overflow-hidden border-2 border-white dark:border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.08)] bg-black/5 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)]"
+          >
+            <img
+              v-if="profilePicture"
+              :src="profilePicture"
+              class="w-full h-full object-cover"
+            />
+            <span
+              v-else
+              class="material-symbols-outlined text-black/20 dark:text-white/40 text-[24px]"
+            >
+              person
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile theme button visible when profile block is hidden -->
+      <div class="md:hidden flex items-center">
+        <div
+          @click="router.push('/profile')"
+          class="w-10 h-10 rounded-full overflow-hidden border-2 border-white dark:border-white/20 bg-black/5 dark:bg-white/10 flex items-center justify-center cursor-pointer"
         >
           <img
             v-if="profilePicture"
@@ -289,7 +323,7 @@ watch(isSearchOpen, (open) => {
           />
           <span
             v-else
-            class="material-symbols-outlined text-black/20 text-[24px]"
+            class="material-symbols-outlined text-black/20 dark:text-white/40 text-[20px]"
           >
             person
           </span>

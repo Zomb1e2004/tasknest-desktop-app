@@ -42,7 +42,7 @@ onUnmounted(() => {
     :transition="{ duration: 0.3, ease: 'easeOut' }"
   >
     <motion.div
-      class="relative w-full max-w-md bg-white border border-black p-10 rounded-2xl shadow-2xl font-['Manrope'] text-black"
+      class="relative w-full max-w-md bg-white border border-black p-10 rounded-2xl shadow-2xl font-['Manrope'] text-black dark:bg-neutral-900 dark:border-white/15 dark:text-neutral-100"
       :initial="{ opacity: 0, scale: 0.95, y: 20 }"
       :animate="{ opacity: 1, scale: 1, y: 0 }"
       :exit="{ opacity: 0, scale: 0.95, y: 20 }"
@@ -51,7 +51,7 @@ onUnmounted(() => {
       <button
         v-if="showCloseButton"
         @click="$emit('close')"
-        class="absolute top-4 right-4 text-black/40 hover:text-black transition-colors"
+        class="absolute top-4 right-4 text-black/40 hover:text-black transition-colors dark:text-white/40 dark:hover:text-white"
       >
         <span class="material-symbols-outlined text-[20px] cursor-pointer">close</span>
       </button>

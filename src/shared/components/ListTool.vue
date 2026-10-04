@@ -180,7 +180,7 @@ defineExpose({
     <button
       v-if="showViewToggle"
       @click="$emit('toggleView')"
-      class="text-black/40 hover:text-black/80 transition-all duration-200 cursor-pointer flex items-center justify-center rounded-xl border border-black/8 bg-white hover:border-black/15 hover:shadow-sm h-[38px] w-[38px]"
+      class="text-black/40 dark:text-white/60 hover:text-black/80 dark:hover:text-white/80 transition-all duration-200 cursor-pointer flex items-center justify-center rounded-xl border border-black/8 dark:border-white/10 bg-white dark:bg-neutral-900 hover:border-black/15 dark:hover:border-white/20 hover:shadow-sm h-[38px] w-[38px]"
       :title="
         isGridView
           ? 'Cambiar a vista de lista'
@@ -196,7 +196,7 @@ defineExpose({
     <button
       v-if="showTagActions"
       @click="showTagModal = true"
-      class="text-black/40 hover:text-black/80 transition-all duration-200 cursor-pointer flex items-center justify-center rounded-xl border border-black/8 bg-white hover:border-black/15 hover:shadow-sm h-[38px] w-[38px]"
+      class="text-black/40 dark:text-white/60 hover:text-black/80 dark:hover:text-white/80 transition-all duration-200 cursor-pointer flex items-center justify-center rounded-xl border border-black/8 dark:border-white/10 bg-white dark:bg-neutral-900 hover:border-black/15 dark:hover:border-white/20 hover:shadow-sm h-[38px] w-[38px]"
       title="Crear nueva etiqueta"
     >
       <span class="material-symbols-outlined text-[20px]">new_label</span>
@@ -208,26 +208,26 @@ defineExpose({
     <!-- Filter Dropdown -->
     <div
       v-if="showFilter"
-      class="filter-dropdown-container relative flex items-center bg-white border border-black/8 rounded-xl hover:border-black/15 hover:shadow-sm transition-all duration-200 font-['Manrope'] h-[38px]"
+      class="filter-dropdown-container relative flex items-center bg-white dark:bg-neutral-900 border border-black/8 dark:border-white/10 rounded-xl hover:border-black/15 dark:hover:border-white/20 hover:shadow-sm transition-all duration-200 font-['Manrope'] h-[38px]"
     >
       <div
         @click="toggleFilter"
         class="relative flex items-center py-2 px-3 cursor-pointer group gap-1.5"
       >
         <span
-          class="material-symbols-outlined text-[17px] text-black/40 group-hover:text-black/70 transition-colors"
-          :class="{ 'text-black! opacity-100': filterLabel && filterLabel !== 'Todas' }"
+          class="material-symbols-outlined text-[17px] text-black/40 dark:text-white/60 group-hover:text-black/70 dark:group-hover:text-white/70 transition-colors"
+          :class="{ 'text-black! dark:text-white! opacity-100': filterLabel && filterLabel !== 'Todas' }"
         >
           filter_list
         </span>
         <span
-          class="text-[13px] font-semibold text-black/60 group-hover:text-black/80 transition-colors select-none"
-          :class="{ 'text-black!': filterLabel && filterLabel !== 'Todas' }"
+          class="text-[13px] font-semibold text-black/60 dark:text-white/60 group-hover:text-black/80 dark:group-hover:text-white/80 transition-colors select-none"
+          :class="{ 'text-black! dark:text-white!': filterLabel && filterLabel !== 'Todas' }"
         >
           {{ filterLabel || 'Todas' }}
         </span>
         <span
-          class="material-symbols-outlined text-[16px] text-black/30 transition-transform duration-300"
+          class="material-symbols-outlined text-[16px] text-black/30 dark:text-white/40 transition-transform duration-300"
           :class="isFilterOpen ? 'rotate-180' : ''"
         >
           expand_more
@@ -244,16 +244,16 @@ defineExpose({
       >
         <div
           v-if="isFilterOpen"
-          class="absolute top-full right-0 mt-2 min-w-[190px] bg-white border border-black/8 rounded-2xl shadow-lg shadow-black/5 z-20 overflow-hidden origin-top-right py-1.5"
+          class="absolute top-full right-0 mt-2 min-w-[190px] bg-white dark:bg-neutral-900 border border-black/8 dark:border-white/10 rounded-2xl shadow-lg shadow-black/5 z-20 overflow-hidden origin-top-right py-1.5"
         >
           <slot name="filters"></slot>
 
           <template v-if="showTagActions">
-            <div v-if="$slots.filters" class="h-px bg-black/5 my-1 mx-3"></div>
+            <div v-if="$slots.filters" class="h-px bg-black/5 dark:bg-white/10 my-1 mx-3"></div>
 
             <div class="px-3 pt-2 pb-1.5 text-center">
               <span
-                class="text-[10px] font-bold text-black/30 uppercase tracking-widest"
+                class="text-[10px] font-bold text-black/30 dark:text-white/40 uppercase tracking-widest"
               >
                 Etiquetas
               </span>
@@ -263,18 +263,18 @@ defineExpose({
               v-for="tag in allTags"
               :key="tag.id"
               class="group/item flex items-center mx-1.5 rounded-lg transition-colors"
-              :class="selectedTag === tag.name ? 'bg-black/5' : 'hover:bg-black/4'"
+              :class="selectedTag === tag.name ? 'bg-black/5 dark:bg-white/10' : 'hover:bg-black/4 dark:hover:bg-white/10'"
             >
               <button
                 @click="selectTag(tag.name)"
                 class="flex-1 cursor-pointer text-left px-2.5 py-2 text-[13px] font-semibold transition-colors flex items-center gap-2"
                 :class="
                   selectedTag === tag.name
-                    ? 'text-black'
-                    : 'text-black/55 hover:text-black/80'
+                    ? 'text-black dark:text-white'
+                    : 'text-black/55 dark:text-white/60 hover:text-black/80 dark:hover:text-white/80'
                 "
               >
-                <span class="text-black/30 font-bold text-[11px]">#</span
+                <span class="text-black/30 dark:text-white/40 font-bold text-[11px]">#</span
                 >{{ tag.name }}
                 <span
                   v-if="selectedTag === tag.name"
@@ -284,7 +284,7 @@ defineExpose({
               </button>
               <button
                 @click.stop="handleDeleteTag(tag)"
-                class="w-6 h-6 mr-2 flex items-center justify-center opacity-0 group-hover/item:opacity-100 text-black/25 hover:text-red-400 rounded-md transition-all duration-150 cursor-pointer shrink-0"
+                class="w-6 h-6 mr-2 flex items-center justify-center opacity-0 group-hover/item:opacity-100 text-black/25 dark:text-white/40 hover:text-red-400 rounded-md transition-all duration-150 cursor-pointer shrink-0"
                 title="Eliminar etiqueta"
               >
                 <span class="material-symbols-outlined text-[14px]">delete</span>
@@ -293,7 +293,7 @@ defineExpose({
 
             <div
               v-if="allTags.length === 0"
-              class="px-4 py-3 text-[12px] font-medium text-black/30 text-center"
+              class="px-4 py-3 text-[12px] font-medium text-black/30 dark:text-white/40 text-center"
             >
               Sin etiquetas
             </div>
@@ -305,35 +305,35 @@ defineExpose({
     <!-- Sorting Dropdown -->
     <div
       v-if="showSort"
-      class="sort-dropdown-container relative flex items-center bg-white border border-black/8 rounded-xl hover:border-black/15 hover:shadow-sm transition-all duration-200 font-['Manrope'] h-[38px]"
+      class="sort-dropdown-container relative flex items-center bg-white dark:bg-neutral-900 border border-black/8 dark:border-white/10 rounded-xl hover:border-black/15 dark:hover:border-white/20 hover:shadow-sm transition-all duration-200 font-['Manrope'] h-[38px]"
     >
       <div
         @click="isSortOpen = !isSortOpen"
         class="relative flex items-center py-2 pl-3 pr-2 cursor-pointer group gap-1.5"
       >
         <span
-          class="material-symbols-outlined text-[17px] text-black/40 group-hover:text-black/70 transition-colors"
+          class="material-symbols-outlined text-[17px] text-black/40 dark:text-white/60 group-hover:text-black/70 dark:group-hover:text-white/70 transition-colors"
         >
           sort
         </span>
         <span
-          class="text-[13px] font-semibold text-black/60 group-hover:text-black/80 transition-colors select-none"
+          class="text-[13px] font-semibold text-black/60 dark:text-white/60 group-hover:text-black/80 dark:group-hover:text-white/80 transition-colors select-none"
         >
           {{ selectedSortLabel }}
         </span>
         <span
-          class="material-symbols-outlined text-[16px] text-black/30 transition-transform duration-300"
+          class="material-symbols-outlined text-[16px] text-black/30 dark:text-white/40 transition-transform duration-300"
           :class="isSortOpen ? 'rotate-180' : ''"
         >
           expand_more
         </span>
       </div>
 
-      <div class="w-px h-4 bg-black/8 mx-1"></div>
+      <div class="w-px h-4 bg-black/8 dark:bg-white/10 mx-1"></div>
 
       <button
         @click="$emit('toggleSortOrder')"
-        class="py-2 px-2.5 text-black/40 hover:text-black/70 hover:bg-black/5 transition-colors rounded-r-xl flex items-center justify-center cursor-pointer"
+        class="py-2 px-2.5 text-black/40 dark:text-white/60 hover:text-black/70 dark:hover:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition-colors rounded-r-xl flex items-center justify-center cursor-pointer"
         :title="sortOrder === 'desc' ? 'Orden descendente' : 'Orden ascendente'"
       >
         <span
@@ -354,11 +354,11 @@ defineExpose({
       >
         <div
           v-if="isSortOpen"
-          class="absolute top-full left-0 mt-2 min-w-full bg-white border border-black/8 rounded-2xl shadow-lg shadow-black/5 z-20 overflow-hidden origin-top-left py-1.5"
+          class="absolute top-full left-0 mt-2 min-w-full bg-white dark:bg-neutral-900 border border-black/8 dark:border-white/10 rounded-2xl shadow-lg shadow-black/5 z-20 overflow-hidden origin-top-left py-1.5"
         >
           <div class="px-3 pt-1 pb-2">
             <span
-              class="text-[10px] font-bold text-black/30 uppercase tracking-widest"
+              class="text-[10px] font-bold text-black/30 dark:text-white/40 uppercase tracking-widest"
             >
               Ordenar por
             </span>
@@ -370,8 +370,8 @@ defineExpose({
             class="w-full cursor-pointer text-left px-3 py-2 text-[13px] font-semibold transition-colors flex items-center justify-between"
             :class="
               sortOption === option.value
-                ? 'bg-black/5 text-black'
-                : 'text-black/55 hover:bg-black/4 hover:text-black/80'
+                ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white'
+                : 'text-black/55 dark:text-white/60 hover:bg-black/4 dark:hover:bg-white/10 hover:text-black/80 dark:hover:text-white/80'
             "
           >
             {{ option.label }}

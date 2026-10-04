@@ -69,7 +69,7 @@ const handleTagDeleted = async (tagName: string) => {
     <template #filters>
       <div class="px-3 pt-1 pb-2">
         <span
-          class="text-[10px] font-bold text-black/30 uppercase tracking-widest"
+          class="text-[10px] font-bold text-black/30 dark:text-white/30 uppercase tracking-widest"
         >
           Estado de tarea
         </span>
@@ -80,11 +80,11 @@ const handleTagDeleted = async (tagName: string) => {
         class="w-full cursor-pointer text-left px-3 py-2 text-[13px] font-semibold transition-colors flex items-center gap-2.5 mx-0"
         :class="
           !selectedStatus
-            ? 'bg-black/5 text-black'
-            : 'text-black/55 hover:bg-black/4 hover:text-black/80'
+            ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white'
+            : 'text-black/55 dark:text-white/55 hover:bg-black/4 dark:hover:bg-white/10 hover:text-black/80 dark:hover:text-white/80'
         "
       >
-        <span class="material-symbols-outlined text-[15px] text-black/40"
+        <span class="material-symbols-outlined text-[15px] text-black/40 dark:text-white/40"
           >task</span
         >
         Todas las tareas
@@ -100,11 +100,11 @@ const handleTagDeleted = async (tagName: string) => {
         class="w-full cursor-pointer text-left px-3 py-2 text-[13px] font-semibold transition-colors flex items-center gap-2.5 mx-0"
         :class="
           selectedStatus === 'pending'
-            ? 'bg-black/5 text-black'
-            : 'text-black/55 hover:bg-black/4 hover:text-black/80'
+            ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white'
+            : 'text-black/55 dark:text-white/55 hover:bg-black/4 dark:hover:bg-white/10 hover:text-black/80 dark:hover:text-white/80'
         "
       >
-        <span class="material-symbols-outlined text-[15px] text-black/40"
+        <span class="material-symbols-outlined text-[15px] text-black/40 dark:text-white/40"
           >pending_actions</span
         >
         Pendientes
@@ -120,11 +120,11 @@ const handleTagDeleted = async (tagName: string) => {
         class="w-full cursor-pointer text-left px-3 py-2 text-[13px] font-semibold transition-colors flex items-center gap-2.5 mx-0"
         :class="
           selectedStatus === 'completed'
-            ? 'bg-black/5 text-black'
-            : 'text-black/55 hover:bg-black/4 hover:text-black/80'
+            ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white'
+            : 'text-black/55 dark:text-white/55 hover:bg-black/4 dark:hover:bg-white/10 hover:text-black/80 dark:hover:text-white/80'
         "
       >
-        <span class="material-symbols-outlined text-[15px] text-black/40"
+        <span class="material-symbols-outlined text-[15px] text-black/40 dark:text-white/40"
           >task_alt</span
         >
         Completadas

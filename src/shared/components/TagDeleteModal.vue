@@ -19,20 +19,20 @@ const emit = defineEmits<{
     <div class="flex flex-col gap-6 w-full text-left font-['Manrope']">
       <div class="flex flex-col gap-2">
         <div
-          class="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center mb-1"
+          class="w-12 h-12 bg-red-50 dark:bg-red-500/15 rounded-2xl flex items-center justify-center mb-1"
         >
           <span class="material-symbols-outlined text-[24px] text-red-500">
             delete_forever
           </span>
         </div>
-        <h3 class="text-xl font-bold text-black leading-tight">
+        <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
           ¿Eliminar etiqueta?
         </h3>
-        <p class="text-black/60 font-medium text-[14px] leading-relaxed">
+        <p class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed">
           La etiqueta
-          <span class="font-bold text-black">#{{ tag.name }}</span>
+          <span class="font-bold text-black dark:text-white">#{{ tag.name }}</span>
           será eliminada permanentemente y
-          <span class="font-bold text-black">removida de todas las notas</span>
+          <span class="font-bold text-black dark:text-white">removida de todas las notas</span>
           que la tengan asignada.
         </p>
       </div>

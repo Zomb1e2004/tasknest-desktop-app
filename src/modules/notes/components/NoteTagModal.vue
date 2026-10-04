@@ -23,17 +23,17 @@ const emit = defineEmits<{
     <div class="flex flex-col gap-6 w-full text-left">
       <div class="flex flex-col gap-2">
         <div
-          class="w-12 h-12 bg-black/5 rounded-2xl flex items-center justify-center mb-1"
+          class="w-12 h-12 bg-black/5 dark:bg-white/10 rounded-2xl flex items-center justify-center mb-1"
         >
-          <span class="material-symbols-outlined text-[24px] text-black">
+          <span class="material-symbols-outlined text-[24px] text-black dark:text-white">
             label
           </span>
         </div>
-        <h3 class="text-xl font-bold text-black leading-tight">
+        <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
           Gestionar etiquetas
         </h3>
-        <p class="text-black/60 font-medium text-[14px] leading-relaxed">
-          Puedes asignar hasta <span class="font-bold text-black">3</span>
+        <p class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed">
+          Puedes asignar hasta <span class="font-bold text-black dark:text-white">3</span>
           etiquetas para categorizar esta nota.
         </p>
       </div>
@@ -43,19 +43,19 @@ const emit = defineEmits<{
           <div
             v-for="tag in tags"
             :key="tag"
-            class="flex items-center gap-1.5 px-3 py-1.5 bg-black/5 rounded-xl border border-black/10 group/tag"
+            class="flex items-center gap-1.5 px-3 py-1.5 bg-black/5 dark:bg-white/10 rounded-xl border border-black/10 dark:border-white/15 group/tag"
           >
-            <span class="text-[13px] font-bold text-black/70">#{{ tag }}</span>
+            <span class="text-[13px] font-bold text-black/70 dark:text-white/70">#{{ tag }}</span>
             <button
               @click="emit('removeTag', tag)"
-              class="flex items-center justify-center w-5 h-5 rounded-full hover:bg-black/10 text-black/30 hover:text-black transition-all cursor-pointer"
+              class="flex items-center justify-center w-5 h-5 rounded-full hover:bg-black/10 dark:hover:bg-white/15 text-black/30 dark:text-white/40 hover:text-black dark:hover:text-white transition-all cursor-pointer"
             >
               <span class="material-symbols-outlined text-[14px]">close</span>
             </button>
           </div>
           <div
             v-if="tags.length === 0"
-            class="text-black/30 text-[13px] font-medium py-1"
+            class="text-black/30 dark:text-white/40 text-[13px] font-medium py-1"
           >
             No hay etiquetas asignadas
           </div>
@@ -70,7 +70,7 @@ const emit = defineEmits<{
               "
               type="text"
               placeholder="Nueva etiqueta..."
-              class="w-full px-4 py-2.5 bg-black/5 border border-black/10 rounded-xl text-sm font-semibold focus:outline-hidden focus:border-black/20 focus:bg-black/[0.07] transition-all"
+              class="w-full px-4 py-2.5 bg-black/5 dark:bg-neutral-900 border border-black/10 dark:border-white/15 rounded-xl text-sm font-semibold text-black dark:text-white placeholder:text-black/30 dark:placeholder-white/40 focus:outline-hidden focus:border-black/20 dark:focus:border-white/30 focus:bg-black/[0.07] dark:focus:bg-white/10 transition-all"
               @keyup.enter="emit('addTag', newTag)"
             />
           </div>
@@ -87,7 +87,7 @@ const emit = defineEmits<{
             v-for="tag in Array.from(new Map(allTags.map(t => [t.name.toLowerCase(), t])).values()).filter((t) => !tags.includes(t.name.toLowerCase()))"
             :key="tag.id"
             @click="emit('addTag', tag.name)"
-            class="px-2.5 py-1.5 rounded-lg border border-black/5 bg-black/2 hover:bg-black/5 text-[12px] font-bold text-black/40 hover:text-black transition-all cursor-pointer"
+            class="px-2.5 py-1.5 rounded-lg border border-black/5 dark:border-white/10 bg-black/2 dark:bg-white/10 hover:bg-black/5 dark:hover:bg-white/15 text-[12px] font-bold text-black/40 dark:text-white/50 hover:text-black dark:hover:text-white transition-all cursor-pointer"
           >
             + {{ tag.name }}
           </button>
@@ -101,7 +101,7 @@ const emit = defineEmits<{
         <button
           v-if="tags.length > 0"
           @click="emit('clearTags')"
-          class="flex items-center gap-1.5 text-[12px] font-semibold text-black/30 hover:text-red-400 transition-colors cursor-pointer"
+          class="flex items-center gap-1.5 text-[12px] font-semibold text-black/30 dark:text-white/40 hover:text-red-400 dark:hover:text-red-300 transition-colors cursor-pointer"
         >
           <span class="material-symbols-outlined text-[15px]">remove_done</span>
           Limpiar todas

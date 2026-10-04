@@ -21,13 +21,13 @@ const emit = defineEmits<{
 
 <template>
   <section
-    class="bg-[#faf9f5] border border-black/5 rounded-3xl p-8 md:p-5.5 font-['Manrope']"
+    class="bg-[#faf9f5] dark:bg-neutral-900 border border-black/5 dark:border-white/10 rounded-3xl p-8 md:p-5.5 font-['Manrope']"
   >
     <div class="flex items-center justify-between mb-3">
-      <h2 class="text-xl font-bold text-black/90">Tareas pendientes</h2>
+      <h2 class="text-xl font-bold text-black/90 dark:text-white/90">Tareas pendientes</h2>
       <button
         @click="$router.push('/tasks')"
-        class="text-xs font-bold tracking-[0.15em] uppercase text-black/40 hover:text-black transition-colors cursor-pointer"
+        class="text-xs font-bold tracking-[0.15em] uppercase text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors cursor-pointer"
       >
         Ver todas
       </button>

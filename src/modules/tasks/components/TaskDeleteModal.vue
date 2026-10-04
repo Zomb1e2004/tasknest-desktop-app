@@ -19,12 +19,12 @@ const emit = defineEmits<{
             delete_forever
           </span>
         </div>
-        <h3 class="text-xl font-bold text-black leading-tight">
+        <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
           ¿Eliminar tarea?
         </h3>
-        <p class="text-black/60 font-medium text-[14px] leading-relaxed">
+        <p class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed">
           Esta acción es
-          <span class="font-bold text-black">permanente e irreversible</span>.
+          <span class="font-bold text-black dark:text-white">permanente e irreversible</span>.
           La tarea desaparecerá por completo de tu sistema.
         </p>
       </div>

@@ -4,6 +4,7 @@ import { marked } from "marked";
 import NoteBadge from "./NoteBadge.vue";
 import BadgeButton from "../../../shared/components/BadgeButton.vue";
 import { useToast } from "../../../shared/composables/useToast";
+import { useTheme } from "../../../shared/composables/useTheme";
 
 const content = defineModel<string>({ default: "" });
 const props = defineProps<{
@@ -261,15 +262,15 @@ onUnmounted(() => {
   <section class="flex flex-col flex-1 min-h-0 w-full gap-3">
     <div class="flex-1 min-h-0 flex flex-col md:flex-row gap-4">
       <div
-        class="relative flex-1 min-h-0 rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col"
-        :class="isFocused ? 'border-black/25' : 'border-black/10'"
+        class="relative flex-1 min-h-0 rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col bg-white dark:bg-neutral-900"
+        :class="isFocused ? 'border-black/25 dark:border-white/30' : 'border-black/10 dark:border-white/15'"
       >
         <div
-          class="flex items-center gap-1 px-3 py-2 border-b border-black/5 bg-black/2"
+          class="flex items-center gap-1 px-3 py-2 border-b border-black/5 dark:border-white/10 bg-black/2 dark:bg-white/5"
         >
           <button
             type="button"
-            class="cursor-pointer p-1.5 rounded-lg hover:bg-black/5 transition-colors group flex items-center gap-1.5 text-black/40 hover:text-black/80"
+            class="cursor-pointer p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors group flex items-center gap-1.5 text-black/40 dark:text-white/50 hover:text-black/80 dark:hover:text-white/80"
             title="Lista con viñetas"
             @click="applyMarkdown('- ')"
           >
@@ -279,7 +280,7 @@ onUnmounted(() => {
           </button>
           <button
             type="button"
-            class="cursor-pointer p-1.5 rounded-lg hover:bg-black/5 transition-colors group flex items-center gap-1.5 text-black/40 hover:text-black/80"
+            class="cursor-pointer p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors group flex items-center gap-1.5 text-black/40 dark:text-white/50 hover:text-black/80 dark:hover:text-white/80"
             title="Lista numerada"
             @click="applyMarkdown('1. ')"
           >
@@ -288,7 +289,7 @@ onUnmounted(() => {
             </span>
           </button>
 
-          <div class="w-px h-4 bg-black/5 mx-1"></div>
+          <div class="w-px h-4 bg-black/5 dark:bg-white/10 mx-1"></div>
 
           <button
             type="button"
@@ -296,7 +297,7 @@ onUnmounted(() => {
             :class="
               !hasSelection
                 ? 'opacity-20 cursor-not-allowed'
-                : 'cursor-pointer hover:bg-black/5 text-black/40 hover:text-black/80'
+                : 'cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 text-black/40 dark:text-white/50 hover:text-black/80 dark:hover:text-white/80'
             "
             :disabled="!hasSelection"
             title="Negrita"
@@ -312,7 +313,7 @@ onUnmounted(() => {
             :class="
               !hasSelection
                 ? 'opacity-20 cursor-not-allowed'
-                : 'cursor-pointer hover:bg-black/5 text-black/40 hover:text-black/80'
+                : 'cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 text-black/40 dark:text-white/50 hover:text-black/80 dark:hover:text-white/80'
             "
             :disabled="!hasSelection"
             title="Cursiva"
@@ -328,7 +329,7 @@ onUnmounted(() => {
           ref="textarea"
           v-model="content"
           placeholder="Empieza a escribir tus pensamientos más brillantes..."
-          class="flex-1 w-full resize-none bg-transparent outline-none px-4 md:px-6 py-5 text-[14px] md:text-[15px] leading-[1.75] font-medium text-black/80 placeholder:text-black/25 overflow-y-auto font-['Manrope'] transition-colors duration-200"
+          class="flex-1 w-full resize-none bg-transparent outline-none px-4 md:px-6 py-5 text-[14px] md:text-[15px] leading-[1.75] font-medium text-black/80 dark:text-white/80 placeholder:text-black/25 dark:placeholder-white/40 overflow-y-auto font-['Manrope'] transition-colors duration-200"
           @input="onInput"
           @keydown="handleKeydown"
           @select="updateSelection"

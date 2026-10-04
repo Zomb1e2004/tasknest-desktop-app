@@ -33,11 +33,11 @@ const leastVisitedNote = computed(() => {
 
 <template>
   <article
-    class="bg-[#faf9f5] border border-black/5 rounded-3xl p-8 md:p-10 font-['Manrope'] flex flex-col justify-center items-center flex-1"
+    class="bg-[#faf9f5] dark:bg-neutral-900 border border-black/5 dark:border-white/10 rounded-3xl p-8 md:p-10 font-['Manrope'] flex flex-col justify-center items-center flex-1"
   >
     <div class="flex flex-col items-center w-full">
       <h3
-        class="text-[11px] font-bold tracking-[0.18em] text-black/40 uppercase mb-8 text-center"
+        class="text-[11px] font-bold tracking-[0.18em] text-black/40 dark:text-white/40 uppercase mb-8 text-center"
       >
         Resumen de notas
       </h3>
@@ -51,7 +51,7 @@ const leastVisitedNote = computed(() => {
         >
           <div class="flex flex-col gap-1.5 items-center mb-4">
             <span
-              class="text-[28px] md:text-[40px] leading-none font-extrabold text-black/90"
+              class="text-[28px] md:text-[40px] leading-none font-extrabold text-black/90 dark:text-white/90"
               >{{ mostVisitedNote?.totalVisits || 0 }}</span
             >
             <span
@@ -64,11 +64,11 @@ const leastVisitedNote = computed(() => {
           <div class="w-full flex flex-col gap-3 items-center">
             <p
               v-if="mostVisitedNote"
-              class="text-[13px] font-bold text-black/70 text-center line-clamp-2 px-4 italic"
+              class="text-[13px] font-bold text-black/70 dark:text-white/70 text-center line-clamp-2 px-4 italic"
             >
               "{{ mostVisitedNote.title }}"
             </p>
-            <p v-else class="text-[13px] font-bold text-black/30 text-center">
+            <p v-else class="text-[13px] font-bold text-black/30 dark:text-white/30 text-center">
               Sin notas
             </p>
           </div>
@@ -76,9 +76,9 @@ const leastVisitedNote = computed(() => {
 
         <!-- Separador -->
         <div
-          class="hidden 2xl:block w-px bg-black/10 self-stretch min-h-[80px]"
+          class="hidden 2xl:block w-px bg-black/10 dark:bg-white/10 self-stretch min-h-[80px]"
         ></div>
-        <hr class="2xl:hidden w-1/2 border-t border-black/10 my-1" />
+        <hr class="2xl:hidden w-1/2 border-t border-black/10 dark:border-white/15 my-1" />
 
         <!-- Menos leída -->
         <div
@@ -86,7 +86,7 @@ const leastVisitedNote = computed(() => {
         >
           <div class="flex flex-col gap-1.5 items-center mb-4">
             <span
-              class="text-[28px] md:text-[40px] leading-none font-extrabold text-black/90"
+              class="text-[28px] md:text-[40px] leading-none font-extrabold text-black/90 dark:text-white/90"
               >{{ leastVisitedNote?.totalVisits || 0 }}</span
             >
             <span
@@ -99,11 +99,11 @@ const leastVisitedNote = computed(() => {
           <div class="w-full flex flex-col gap-3 items-center">
             <p
               v-if="leastVisitedNote"
-              class="text-[13px] font-bold text-black/70 text-center line-clamp-2 px-4 italic"
+              class="text-[13px] font-bold text-black/70 dark:text-white/70 text-center line-clamp-2 px-4 italic"
             >
               "{{ leastVisitedNote.title }}"
             </p>
-            <p v-else class="text-[13px] font-bold text-black/30 text-center">
+            <p v-else class="text-[13px] font-bold text-black/30 dark:text-white/30 text-center">
               Sin notas
             </p>
           </div>

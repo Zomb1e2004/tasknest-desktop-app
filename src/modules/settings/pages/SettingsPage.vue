@@ -13,14 +13,10 @@ import { getWordByIndex } from "../../../shared/utils/getWordByIndex";
 import { useDashboardView } from "../../dashboard/composables/useDashboardView";
 import { useNotesView } from "../../notes/composables/useNotesView";
 import { useTasksView } from "../../tasks/composables/useTasksView";
+import { useTheme } from "../../../shared/composables/useTheme";
 
 const { userName } = useUser();
-// const { addToast } = useToast();
-
-const { isDashboardGridView } = useDashboardView();
-const { isGridView: isNotesGridView } = useNotesView();
-const { isGridView: isTasksGridView } = useTasksView();
-
+const { theme, setTheme } = useTheme();
 // const isConfirmModalOpen = ref(false);
 
 // const handleResetData = () => {
@@ -63,31 +59,31 @@ const { isGridView: isTasksGridView } = useTasksView();
       <motion.section
         :initial="{ opacity: 0, y: 0 }"
         :animate="{ opacity: 1, y: 0 }"
-        class="flex flex-col gap-6 py-8 border-y border-black/5 select-none"
+        class="flex flex-col gap-6 py-8 border-y border-black/5 dark:border-white/10 select-none"
       >
         <div class="flex flex-col gap-4">
           <div class="flex items-center gap-2 px-1">
-            <span class="material-symbols-outlined text-[16px] text-black/30">
+            <span class="material-symbols-outlined text-[16px] text-black/30 dark:text-white/40">
               settings
             </span>
             <p
-              class="text-[10px] font-bold uppercase tracking-[0.25em] text-black/30"
+              class="text-[10px] font-bold uppercase tracking-[0.25em] text-black/30 dark:text-white/40"
             >
               Configuración del Sistema
             </p>
           </div>
 
           <h2
-            class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black/90 leading-[1.15]"
+            class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black/90 dark:text-white/90 leading-[1.15]"
           >
             Ajustes de
-            <span class="text-black">
+            <span class="text-black dark:text-white">
               {{ getWordByIndex(userName, 1) || "Usuario" }}
             </span>
             ⚙️
             <br />
             <span
-              class="text-black/40 font-semibold text-lg sm:text-xl md:text-2xl mt-3 block"
+              class="text-black/40 dark:text-white/50 font-semibold text-lg sm:text-xl md:text-2xl mt-3 block"
             >
               Personaliza el comportamiento de tu espacio de trabajo.
             </span>
@@ -96,17 +92,66 @@ const { isGridView: isTasksGridView } = useTasksView();
       </motion.section>
 
       <div class="flex flex-col gap-6">
+        <!-- Appearance Card -->
+        <motion.div
+          :initial="{ opacity: 0, x: 0 }"
+          :animate="{ opacity: 1, x: 0 }"
+          class="bg-white/60 dark:bg-neutral-900/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-8"
+        >
+          <div class="flex flex-col gap-2">
+            <h3 class="font-black text-2xl text-black dark:text-white tracking-tight">
+              Apariencia
+            </h3>
+            <p class="text-sm font-medium text-black/40 dark:text-white/50">
+              Elige entre modo claro y oscuro. Se guarda automáticamente.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div
+              @click="setTheme('light')"
+              class="flex items-center gap-4 p-6 rounded-4xl border transition-all cursor-pointer"
+              :class="
+                theme === 'light'
+                  ? 'bg-black text-white border-black shadow-lg scale-[1.02] dark:bg-white dark:text-black dark:border-white'
+                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10'
+              "
+            >
+              <span class="material-symbols-outlined text-[32px]">light_mode</span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Tema</span>
+                <span class="text-sm font-bold">Claro</span>
+              </div>
+            </div>
+            <div
+              @click="setTheme('dark')"
+              class="flex items-center gap-4 p-6 rounded-4xl border transition-all cursor-pointer"
+              :class="
+                theme === 'dark'
+                  ? 'bg-black text-white border-black shadow-lg scale-[1.02] dark:bg-white dark:text-black dark:border-white'
+                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10'
+              "
+            >
+              <span class="material-symbols-outlined text-[32px]">dark_mode</span>
+              <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Tema</span>
+                <span class="text-sm font-bold">Oscuro</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         <!-- Visual Preferences Card -->
         <motion.div
           :initial="{ opacity: 0, x: 0 }"
           :animate="{ opacity: 1, x: 0 }"
-          class="bg-white/60 backdrop-blur-xl border border-black/5 rounded-[2.5rem] p-8 md:p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-10"
+          class="bg-white/60 dark:bg-neutral-900/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-10"
         >
           <div class="flex flex-col gap-2">
-            <h3 class="font-black text-2xl text-black tracking-tight">
+            <h3 class="font-black text-2xl text-black dark:text-white tracking-tight">
               Preferencias de Visualización
             </h3>
-            <p class="text-sm font-medium text-black/40">
+            <p class="text-sm font-medium text-black/40 dark:text-white/50">
               Elige cómo se ven tus listas al iniciar la aplicación.
             </p>
           </div>
@@ -118,8 +163,8 @@ const { isGridView: isTasksGridView } = useTasksView();
               class="flex flex-col gap-4 p-6 rounded-4xl border transition-all cursor-pointer group"
               :class="
                 isDashboardGridView
-                  ? 'bg-black text-white border-black shadow-lg scale-[1.02]'
-                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6'
+                  ? 'bg-black text-white border-black shadow-lg scale-[1.02] dark:bg-white dark:text-black dark:border-white'
+                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10'
               "
             >
               <span class="material-symbols-outlined text-[32px]">
@@ -142,8 +187,8 @@ const { isGridView: isTasksGridView } = useTasksView();
               class="flex flex-col gap-4 p-6 rounded-4xl border transition-all cursor-pointer group"
               :class="
                 isNotesGridView
-                  ? 'bg-black text-white border-black shadow-lg scale-[1.02]'
-                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6'
+                  ? 'bg-black text-white border-black shadow-lg scale-[1.02] dark:bg-white dark:text-black dark:border-white'
+                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10'
               "
             >
               <span class="material-symbols-outlined text-[32px]">
@@ -166,8 +211,8 @@ const { isGridView: isTasksGridView } = useTasksView();
               class="flex flex-col gap-4 p-6 rounded-4xl border transition-all cursor-pointer group"
               :class="
                 isTasksGridView
-                  ? 'bg-black text-white border-black shadow-lg scale-[1.02]'
-                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6'
+                  ? 'bg-black text-white border-black shadow-lg scale-[1.02] dark:bg-white dark:text-black dark:border-white'
+                  : 'bg-black/4 text-black/40 border-transparent hover:bg-black/6 dark:bg-white/5 dark:text-white/50 dark:hover:bg-white/10'
               "
             >
               <span class="material-symbols-outlined text-[32px]">
@@ -301,6 +346,7 @@ const { isGridView: isTasksGridView } = useTasksView();
         </div>
       </div>
     </Modal> -->
+
   </Page>
 </template>
 

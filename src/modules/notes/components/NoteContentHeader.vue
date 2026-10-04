@@ -52,14 +52,14 @@ const handleConvert = async () => {
         <div
           v-for="tag in note.tags"
           :key="tag"
-          class="px-2.5 py-1 rounded-lg bg-black/5 border border-black/5 text-[11px] font-bold text-black/50 uppercase tracking-tight"
+          class="px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/10 text-[11px] font-bold text-black/50 dark:text-white/60 uppercase tracking-tight"
         >
           #{{ tag }}
         </div>
       </template>
       <div
         v-else
-        class="px-2.5 py-1 rounded-lg bg-black/5 border border-black/5 text-[11px] font-bold text-black/30 uppercase tracking-tight italic"
+        class="px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/10 text-[11px] font-bold text-black/30 dark:text-white/40 uppercase tracking-tight italic"
       >
         Sin etiquetas
       </div>
@@ -67,16 +67,16 @@ const handleConvert = async () => {
 
     <button
       @click="showModal = true"
-      class="flex cursor-pointer items-center gap-2 px-3 py-1.5 rounded-xl border border-black/10 bg-white hover:bg-black/2 transition-all active:scale-95 group shadow-sm hover:shadow-md"
+      class="flex cursor-pointer items-center gap-2 px-3 py-1.5 rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-neutral-900 hover:bg-black/2 dark:hover:bg-white/10 transition-all active:scale-95 group shadow-sm hover:shadow-md"
       :title="`Convertir a ${targetFormat.toUpperCase()}`"
     >
       <span
-        class="material-symbols-outlined text-[18px] text-black/40 group-hover:text-black transition-colors"
+        class="material-symbols-outlined text-[18px] text-black/40 dark:text-white/50 group-hover:text-black dark:group-hover:text-white transition-colors"
       >
         {{ targetFormat === "md" ? "markdown" : "description" }}
       </span>
       <span
-        class="text-[12px] font-bold text-black/60 group-hover:text-black hidden sm:inline transition-colors"
+        class="text-[12px] font-bold text-black/60 dark:text-white/60 group-hover:text-black dark:group-hover:text-white hidden sm:inline transition-colors"
       >
         Convertir a {{ targetFormat.toUpperCase() }}
       </span>

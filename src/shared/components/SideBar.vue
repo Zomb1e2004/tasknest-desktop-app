@@ -24,7 +24,7 @@ const menuItems = [
     :class="
       isOpen ? 'translate-x-0 shadow-2xl lg:shadow-none' : '-translate-x-full'
     "
-    class="flex flex-col h-screen w-64 border-r border-black bg-black font-['Manrope'] text-sm tracking-tight py-8 fixed left-0 top-0 z-60 transition-transform duration-300 ease-in-out select-none"
+    class="flex flex-col h-screen w-64 border-r border-black dark:border-white/10 bg-black font-['Manrope'] text-sm tracking-tight py-8 fixed left-0 top-0 z-60 transition-transform duration-300 ease-in-out select-none"
   >
     <div class="absolute top-8 -right-8 hidden lg:block">
       <button

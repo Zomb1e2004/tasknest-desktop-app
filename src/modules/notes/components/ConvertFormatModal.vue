@@ -18,9 +18,9 @@ defineEmits<{
     <div class="flex flex-col gap-6 text-center">
       <div class="flex flex-col gap-3">
         <div
-          class="w-14 h-14 bg-black/5 rounded-2xl flex items-center justify-center mx-auto mb-2"
+          class="w-14 h-14 bg-black/5 dark:bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-2"
         >
-          <span class="material-symbols-outlined text-[32px] text-black/60">
+          <span class="material-symbols-outlined text-[32px] text-black/60 dark:text-white/60">
             {{ targetFormat === "md" ? "markdown" : "description" }}
           </span>
         </div>
@@ -29,7 +29,7 @@ defineEmits<{
           Convertir a {{ targetFormat.toUpperCase() }}
         </h3>
 
-        <p class="text-sm text-black/50 leading-relaxed px-4">
+        <p class="text-sm text-black/50 dark:text-white/60 leading-relaxed px-4">
           <template v-if="targetFormat === 'md'">
             Se habilitará la previsualización de Markdown y el soporte para
             formato enriquecido en esta nota.

@@ -18,34 +18,34 @@ const emit = defineEmits<{
     <div class="flex flex-col gap-6 w-full text-left">
       <div class="flex flex-col gap-2">
         <div
-          class="w-12 h-12 bg-black/5 rounded-2xl flex items-center justify-center mb-1"
+          class="w-12 h-12 bg-black/5 dark:bg-white/10 rounded-2xl flex items-center justify-center mb-1"
         >
-          <span class="material-symbols-outlined text-[24px] text-black">
+          <span class="material-symbols-outlined text-[24px] text-black dark:text-white">
             {{ note.format === "md" ? "markdown" : "file_download" }}
           </span>
         </div>
-        <h3 class="text-xl font-bold text-black leading-tight">
+        <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
           Exportar como {{ note.format.toUpperCase() }}
         </h3>
         <p
           v-if="note.format === 'txt'"
-          class="text-black/60 font-medium text-[14px] leading-relaxed"
+          class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed"
         >
           La nota será descargada con la siguiente estructura clásica:
         </p>
         <p
           v-else
-          class="text-black/60 font-medium text-[14px] leading-relaxed"
+          class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed"
         >
           La nota será descargada en su formato
-          <span class="font-bold text-black">raw</span> original, sin
+          <span class="font-bold text-black dark:text-white">raw</span> original, sin
           estructuras adicionales.
         </p>
       </div>
 
       <div
         v-if="note.format === 'txt'"
-        class="bg-black/5 p-4 rounded-xl border border-black/10 flex flex-col gap-1 text-[13px] text-black/80 font-medium font-mono"
+        class="bg-black/5 dark:bg-white/10 p-4 rounded-xl border border-black/10 dark:border-white/15 flex flex-col gap-1 text-[13px] text-black/80 dark:text-white/80 font-medium font-mono"
       >
         <span>{{ note.title }}</span>
         <br />
@@ -59,7 +59,7 @@ const emit = defineEmits<{
 
       <div
         v-else
-        class="bg-black/5 p-4 rounded-xl border border-black/10 flex flex-col gap-1 text-[13px] text-black/80 font-medium font-mono"
+        class="bg-black/5 dark:bg-white/10 p-4 rounded-xl border border-black/10 dark:border-white/15 flex flex-col gap-1 text-[13px] text-black/80 dark:text-white/80 font-medium font-mono"
       >
         <span>{Contenido Raw}</span>
       </div>

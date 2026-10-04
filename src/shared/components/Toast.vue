@@ -80,11 +80,11 @@ const getAnimation = (h: string) => ({
             <div class="grow flex flex-col justify-center py-4 px-4 gap-0.5">
               <h4
                 v-if="toast.title"
-                class="font-black text-[15px] text-black uppercase tracking-tight leading-none mb-1"
+                class="font-black text-[15px] text-black dark:text-white uppercase tracking-tight leading-none mb-1"
               >
                 {{ toast.title }}
               </h4>
-              <p class="text-[13px] text-black/70 font-semibold leading-snug">
+              <p class="text-[13px] text-black/70 dark:text-white/70 font-semibold leading-snug">
                 {{ toast.message }}
               </p>
             </div>
@@ -92,7 +92,7 @@ const getAnimation = (h: string) => ({
             <div class="shrink-0 flex items-start p-2">
               <button
                 @click="removeToast(toast.id!)"
-                class="w-8 h-8 flex items-center justify-center rounded-lg text-black/20 hover:text-black hover:bg-black/5 transition-all cursor-pointer"
+                class="w-8 h-8 flex items-center justify-center rounded-lg text-black/20 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
               >
                 <span class="material-symbols-outlined text-[18px]">close</span>
               </button>

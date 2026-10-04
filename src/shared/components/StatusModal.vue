@@ -36,11 +36,11 @@ const iconData = computed(() => {
         </span>
       </div>
       <div class="flex flex-col gap-2">
-        <h3 class="text-xl font-bold text-black leading-tight">
+        <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
           {{ title }}
         </h3>
         <p
-          class="text-black/50 font-medium text-[15px] leading-relaxed max-w-[260px] mx-auto"
+          class="text-black/50 dark:text-white/60 font-medium text-[15px] leading-relaxed max-w-[260px] mx-auto"
         >
           {{ message }}
         </p>

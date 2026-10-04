@@ -26,7 +26,7 @@ defineEmits<{
 
 <template>
   <motion.footer
-    class="h-20 sm:h-24 px-4 sm:px-8 md:px-12 flex items-center justify-end bg-white/55 backdrop-blur-md border-t border-black/10 sticky bottom-0 z-50 w-full font-['Manrope'] select-none gap-4"
+    class="h-20 sm:h-24 px-4 sm:px-8 md:px-12 flex items-center justify-end bg-white/55 dark:bg-neutral-900/90 backdrop-blur-md border-t border-black/10 dark:border-white/10 sticky bottom-0 z-50 w-full font-['Manrope'] select-none gap-4"
     :style="{ boxShadow: '0 -4px 60px -15px rgba(0, 0, 0, 0.05)' }"
     layout
     :initial="{ opacity: 0, y: 0 }"

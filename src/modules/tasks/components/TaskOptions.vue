@@ -29,11 +29,11 @@ const emit = defineEmits<{
         left: left + 'px',
         zIndex: 50,
       }"
-      class="options-container w-40 bg-white border border-black/10 rounded-xl shadow-xl py-1.5 overflow-hidden"
+      class="options-container w-40 bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/10 rounded-xl shadow-xl py-1.5 overflow-hidden"
     >
       <button
         @click.stop="emit('tags')"
-        class="w-full cursor-pointer text-left px-4 py-2.5 text-sm font-semibold text-black/60 hover:text-black hover:bg-black/5 transition flex items-center gap-2"
+        class="w-full cursor-pointer text-left px-4 py-2.5 text-sm font-semibold text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition flex items-center gap-2"
       >
         <span class="material-symbols-outlined text-[16px]"> label </span>
         Etiquetas

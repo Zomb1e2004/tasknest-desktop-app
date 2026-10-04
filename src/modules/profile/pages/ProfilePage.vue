@@ -16,7 +16,6 @@ const {
   setBirthday,
 } = useUser();
 const { addToast } = useToast();
-
 const localUserName = ref(userName.value);
 const localProfilePicture = ref(profilePicture.value);
 const localBirthday = ref(birthday.value);
@@ -62,31 +61,31 @@ const removePhoto = () => {
       <motion.section
         :initial="{ opacity: 0, y: 0 }"
         :animate="{ opacity: 1, y: 0 }"
-        class="flex flex-col gap-6 py-8 border-y border-black/5 select-none"
+        class="flex flex-col gap-6 py-8 border-y border-black/5 dark:border-white/10 select-none"
       >
         <div class="flex flex-col gap-4">
           <div class="flex items-center gap-2 px-1">
-            <span class="material-symbols-outlined text-[16px] text-black/30">
+            <span class="material-symbols-outlined text-[16px] text-black/30 dark:text-white/30">
               account_circle
             </span>
             <p
-              class="text-[10px] font-bold uppercase tracking-[0.25em] text-black/30"
+              class="text-[10px] font-bold uppercase tracking-[0.25em] text-black/30 dark:text-white/30"
             >
               Configuración de Perfil
             </p>
           </div>
 
           <h2
-            class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black/90 leading-[1.15]"
+            class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-black/90 dark:text-white/90 leading-[1.15]"
           >
             Hola,
-            <span class="text-black">
+            <span class="text-black dark:text-white">
               {{ getWordByIndex(userName, 1) || "Usuario" }}
             </span>
             👋
             <br />
             <span
-              class="text-black/40 font-semibold text-lg sm:text-xl md:text-2xl mt-3 block"
+              class="text-black/40 dark:text-white/40 font-semibold text-lg sm:text-xl md:text-2xl mt-3 block"
             >
               Personaliza tu identidad en la plataforma.
             </span>
@@ -103,12 +102,12 @@ const removePhoto = () => {
             :animate="{ opacity: 1, x: 0 }"
           >
             <div
-              class="bg-white/60 backdrop-blur-xl border border-black/5 rounded-[2.5rem] p-5.5 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col md:flex-row items-center gap-8 transition-all hover:shadow-[0_14px_45px_rgba(0,0,0,0.07)]"
+              class="bg-white/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-5.5 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col md:flex-row items-center gap-8 transition-all hover:shadow-[0_14px_45px_rgba(0,0,0,0.07)]"
             >
               <!-- Avatar Header -->
               <div class="relative group shrink-0">
                 <div
-                  class="w-32 h-32 rounded-full overflow-hidden border-[6px] border-white shadow-xl bg-linear-to-b from-black/5 to-black/3 flex items-center justify-center transition-all duration-500 group-hover:scale-[1.03]"
+                  class="w-32 h-32 rounded-full overflow-hidden border-[6px] border-white dark:border-neutral-900 shadow-xl bg-linear-to-b from-black/5 dark:from-white/10 to-black/3 dark:to-white/5 flex items-center justify-center transition-all duration-500 group-hover:scale-[1.03]"
                 >
                   <img
                     v-if="localProfilePicture"
@@ -118,7 +117,7 @@ const removePhoto = () => {
                   />
                   <span
                     v-else
-                    class="material-symbols-outlined text-[48px] text-black/10"
+                    class="material-symbols-outlined text-[48px] text-black/10 dark:text-white/10"
                   >
                     person
                   </span>
@@ -148,12 +147,12 @@ const removePhoto = () => {
               >
                 <div class="flex flex-col items-center md:items-start gap-1">
                   <span
-                    class="text-[10px] font-black uppercase tracking-[0.2em] text-black/20"
+                    class="text-[10px] font-black uppercase tracking-[0.2em] text-black/20 dark:text-white/20"
                   >
                     Información Actual
                   </span>
                   <h3
-                    class="font-black text-2xl md:text-3xl text-black tracking-tight"
+                    class="font-black text-2xl md:text-3xl text-black dark:text-white tracking-tight"
                   >
                     {{ localUserName || "Sin nombre" }}
                   </h3>
@@ -177,25 +176,25 @@ const removePhoto = () => {
             :animate="{ opacity: 1, x: 0 }"
           >
             <div
-              class="bg-white/70 backdrop-blur-2xl border border-black/5 rounded-[2.5rem] p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-12"
+              class="bg-white/70 dark:bg-neutral-900/70 backdrop-blur-2xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-10 shadow-[0_10px_35px_rgba(0,0,0,0.05)] flex flex-col gap-12"
             >
               <div class="grid grid-cols-1 gap-9">
                 <!-- Name -->
                 <div class="flex flex-col gap-3">
                   <div class="flex items-center justify-between px-1">
                     <label
-                      class="text-[11px] font-black uppercase tracking-[0.18em] text-black/40"
+                      class="text-[11px] font-black uppercase tracking-[0.18em] text-black/40 dark:text-white/40"
                     >
                       Nombre de Identidad
                     </label>
-                    <span class="text-[10px] font-medium text-black/20 italic">
+                    <span class="text-[10px] font-medium text-black/20 dark:text-white/20 italic">
                       Requerido
                     </span>
                   </div>
 
                   <div class="relative">
                     <span
-                      class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-black/20"
+                      class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-black/20 dark:text-white/20"
                     >
                       fingerprint
                     </span>
@@ -204,7 +203,7 @@ const removePhoto = () => {
                       v-model="localUserName"
                       type="text"
                       placeholder="Escribe tu nuevo nombre..."
-                      class="w-full pl-14 pr-6 py-4.5 bg-black/4 hover:bg-black/6 border border-transparent rounded-3xl font-bold text-base focus:bg-white focus:border-black/10 focus:ring-[6px] focus:ring-black/5 outline-none transition-all placeholder:text-black/25 tracking-tight"
+                      class="w-full pl-14 pr-6 py-4.5 bg-black/4 dark:bg-white/10 hover:bg-black/6 dark:hover:bg-white/10 border border-transparent rounded-3xl font-bold text-base text-black dark:text-white focus:bg-white dark:focus:bg-neutral-900 focus:border-black/10 dark:focus:border-white/15 focus:ring-[6px] focus:ring-black/5 dark:focus:ring-white/10 outline-none transition-all placeholder:text-black/25 dark:placeholder-white/40 tracking-tight"
                     />
                   </div>
                 </div>
@@ -213,12 +212,12 @@ const removePhoto = () => {
                 <div class="flex flex-col gap-3">
                   <div class="flex items-center justify-between px-1">
                     <label
-                      class="text-[11px] font-black uppercase tracking-[0.18em] text-black/40"
+                      class="text-[11px] font-black uppercase tracking-[0.18em] text-black/40 dark:text-white/40"
                     >
                       Fecha de Nacimiento
                     </label>
                     <span
-                      class="material-symbols-outlined text-[16px] text-black/20"
+                      class="material-symbols-outlined text-[16px] text-black/20 dark:text-white/20"
                     >
                       cake
                     </span>
@@ -226,7 +225,7 @@ const removePhoto = () => {
 
                   <div class="relative">
                     <span
-                      class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-black/20"
+                      class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-black/20 dark:text-white/20"
                     >
                       calendar_today
                     </span>
@@ -234,7 +233,7 @@ const removePhoto = () => {
                     <input
                       v-model="localBirthday"
                       type="date"
-                      class="w-full pl-14 pr-6 py-4.5 bg-black/4 hover:bg-black/6 border border-transparent rounded-3xl font-bold text-base focus:bg-white focus:border-black/10 focus:ring-[6px] focus:ring-black/5 outline-none transition-all"
+                      class="w-full pl-14 pr-6 py-4.5 bg-black/4 dark:bg-white/10 hover:bg-black/6 dark:hover:bg-white/10 border border-transparent rounded-3xl font-bold text-base text-black dark:text-white focus:bg-white dark:focus:bg-neutral-900 focus:border-black/10 dark:focus:border-white/15 focus:ring-[6px] focus:ring-black/5 dark:focus:ring-white/10 outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -242,15 +241,15 @@ const removePhoto = () => {
 
               <!-- Footer -->
               <div
-                class="pt-6 flex items-center justify-between border-t border-black/5"
+                class="pt-6 flex items-center justify-between border-t border-black/5 dark:border-white/10"
               >
                 <div class="flex flex-col">
                   <span
-                    class="text-[10px] font-bold uppercase tracking-widest text-black/30"
+                    class="text-[10px] font-bold uppercase tracking-widest text-black/30 dark:text-white/30"
                   >
                     Miembro desde
                   </span>
-                  <span class="text-sm font-black text-black">
+                  <span class="text-sm font-black text-black dark:text-white">
                     07 de Abril, 2026
                   </span>
                 </div>
@@ -265,6 +264,7 @@ const removePhoto = () => {
               </div>
             </div>
           </motion.div>
+
         </div>
       </div>
     </div>

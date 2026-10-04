@@ -19,16 +19,16 @@ const emit = defineEmits<{
     <div class="flex flex-col gap-6 w-full text-left font-['Manrope']">
       <div class="flex flex-col gap-2">
         <div
-          class="w-12 h-12 bg-black/5 rounded-2xl flex items-center justify-center mb-1"
+          class="w-12 h-12 bg-black/5 dark:bg-white/10 rounded-2xl flex items-center justify-center mb-1"
         >
-          <span class="material-symbols-outlined text-[24px] text-black">
+          <span class="material-symbols-outlined text-[24px] text-black dark:text-white">
             label
           </span>
         </div>
-        <h3 class="text-xl font-bold text-black leading-tight">
+        <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
           Nueva etiqueta
         </h3>
-        <p class="text-black/60 font-medium text-[14px] leading-relaxed">
+        <p class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed">
           Ingresa un nombre para la nueva etiqueta. Las etiquetas te ayudan a
           organizar mejor tus notas.
         </p>
@@ -42,7 +42,7 @@ const emit = defineEmits<{
           "
           type="text"
           placeholder="Nombre de la etiqueta..."
-          class="w-full px-4 py-3 bg-black/5 border border-black/10 rounded-xl text-sm font-bold text-black placeholder:text-black/30 focus:outline-hidden focus:border-black/20 transition-all"
+          class="w-full px-4 py-3 bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 rounded-xl text-sm font-bold text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/40 focus:outline-hidden focus:border-black/20 dark:focus:border-white/20 transition-all"
           @keyup.enter="emit('confirm')"
           autofocus
         />

@@ -48,53 +48,53 @@ const handleSave = () => {
     <div class="flex flex-col gap-6 w-full text-left">
       <div class="flex flex-col gap-2">
         <div
-          class="w-12 h-12 bg-black/5 rounded-2xl flex items-center justify-center mb-1"
+          class="w-12 h-12 bg-black/5 dark:bg-white/10 rounded-2xl flex items-center justify-center mb-1"
         >
-          <span class="material-symbols-outlined text-[24px] text-black">
+          <span class="material-symbols-outlined text-[24px] text-black dark:text-white">
             edit_note
           </span>
         </div>
-        <h3 class="text-xl font-bold text-black leading-tight">
+        <h3 class="text-xl font-bold text-black dark:text-white leading-tight">
           Actualizar tarea
         </h3>
-        <p class="text-black/60 font-medium text-[14px] leading-relaxed">
+        <p class="text-black/60 dark:text-white/60 font-medium text-[14px] leading-relaxed">
           Modifica los detalles de tu tarea.
         </p>
       </div>
 
       <div class="flex flex-col gap-4">
         <div class="flex flex-col gap-1.5">
-          <label class="text-[12px] font-bold text-black/40 uppercase tracking-wider ml-1">Título</label>
+          <label class="text-[12px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider ml-1">Título</label>
           <input
             v-model="title"
             type="text"
             placeholder="¿Qué hay que hacer?"
-            class="w-full px-4 py-2.5 bg-black/5 border border-black/10 rounded-xl text-sm font-semibold focus:outline-hidden focus:border-black/20 focus:bg-black/[0.07] transition-all"
+            class="w-full px-4 py-2.5 bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 rounded-xl text-sm font-semibold text-black dark:text-white placeholder-black/30 dark:placeholder-white/40 focus:outline-hidden focus:border-black/20 dark:focus:border-white/20 focus:bg-black/[0.07] dark:focus:bg-white/10 transition-all"
             @keyup.enter="handleSave"
           />
         </div>
 
         <div class="flex flex-col gap-1.5">
-          <label class="text-[12px] font-bold text-black/40 uppercase tracking-wider ml-1">Descripción</label>
+          <label class="text-[12px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider ml-1">Descripción</label>
           <textarea
             v-model="description"
             placeholder="Añade más detalles..."
             rows="3"
-            class="w-full px-4 py-2.5 bg-black/5 border border-black/10 rounded-xl text-sm font-semibold focus:outline-hidden focus:border-black/20 focus:bg-black/[0.07] transition-all resize-none"
+            class="w-full px-4 py-2.5 bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 rounded-xl text-sm font-semibold text-black dark:text-white placeholder-black/30 dark:placeholder-white/40 focus:outline-hidden focus:border-black/20 dark:focus:border-white/20 focus:bg-black/[0.07] dark:focus:bg-white/10 transition-all resize-none"
           ></textarea>
         </div>
 
         <div class="grid grid-cols-1 gap-4">
           <div class="flex flex-col gap-1.5 relative">
-            <label class="text-[12px] font-bold text-black/40 uppercase tracking-wider ml-1">Prioridad</label>
+            <label class="text-[12px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider ml-1">Prioridad</label>
             <div 
               @click="togglePriority"
-              class="w-full px-4 py-2.5 bg-black/5 border border-black/10 rounded-xl text-sm font-semibold flex items-center justify-between cursor-pointer hover:bg-black/[0.07] transition-all"
-              :class="isPriorityOpen ? 'border-black/20 bg-black/[0.07]' : ''"
+              class="w-full px-4 py-2.5 bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/10 rounded-xl text-sm font-semibold text-black dark:text-white flex items-center justify-between cursor-pointer hover:bg-black/[0.07] dark:hover:bg-white/10 transition-all"
+              :class="isPriorityOpen ? 'border-black/20 dark:border-white/20 bg-black/[0.07] dark:bg-white/10' : ''"
             >
               <span>{{ priority }}</span>
               <span 
-                class="material-symbols-outlined text-[20px] text-black/40 transition-transform duration-300"
+                class="material-symbols-outlined text-[20px] text-black/40 dark:text-white/40 transition-transform duration-300"
                 :class="isPriorityOpen ? 'rotate-180' : ''"
               >
                 expand_more
@@ -112,7 +112,7 @@ const handleSave = () => {
             >
               <div 
                 v-if="isPriorityOpen"
-                class="absolute top-full left-0 w-full mt-2 bg-white border border-black/10 rounded-xl shadow-xl z-50 overflow-hidden py-1"
+                class="absolute top-full left-0 w-full mt-2 bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/10 rounded-xl shadow-xl z-50 overflow-hidden py-1"
               >
                 <button
                   v-for="p in priorities"
@@ -121,8 +121,8 @@ const handleSave = () => {
                   class="w-full px-4 py-2.5 text-sm font-semibold text-left transition-colors flex items-center justify-between cursor-pointer"
                   :class="[
                     priority === p 
-                      ? 'bg-black/5 text-black' 
-                      : 'text-black/60 hover:bg-black/3 hover:text-black'
+                      ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white' 
+                      : 'text-black/60 dark:text-white/60 hover:bg-black/3 dark:hover:bg-white/10 hover:text-black dark:hover:text-white'
                   ]"
                 >
                   {{ p }}

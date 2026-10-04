@@ -4,15 +4,18 @@ import DefaultLayout from "./layouts/DefaultLayout.vue";
 import WelcomeModal from "./shared/components/WelcomeModal.vue";
 import { getGreeting } from "./shared/utils/getGreeting";
 import { useUser } from "./shared/composables/useUser";
+import { useTheme } from "./shared/composables/useTheme";
 import { AnimatePresence } from "motion-v";
 import Toast from "./shared/components/Toast.vue";
 import { useToast } from "./shared/composables/useToast";
 
 const { userName, setUserName } = useUser();
+const { initTheme } = useTheme();
 const { addToast } = useToast();
 const showWelcomeModal = ref(false);
 
 onMounted(() => {
+  initTheme();
   window.addEventListener("keydown", (e) => {
     if (
       (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") ||

@@ -327,11 +327,11 @@ const downloadNote = async () => {
     :initial="{ opacity: 0, y: 0 }"
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
-    class="group relative bg-white border border-black/10 rounded-3xl p-4.5 flex flex-col gap-6 shadow-sm hover:shadow-lg hover:border-black/20 transition-all duration-300 cursor-pointer overflow-visible"
-    :class="{ 'border-black/30 bg-black/1!': note.isPinned && showPin }"
+    class="group relative bg-white dark:bg-neutral-900 border border-black/10 dark:border-white/15 rounded-3xl p-4.5 flex flex-col gap-6 shadow-sm hover:shadow-lg hover:border-black/20 dark:hover:border-white/25 transition-all duration-300 cursor-pointer overflow-visible"
+    :class="{ 'border-black/30 dark:border-white/30 bg-black/1! dark:bg-white/5!': note.isPinned && showPin }"
   >
     <div
-      class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 to-transparent rounded-3xl"
+      class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 dark:from-white/10 to-transparent rounded-3xl"
     />
 
     <div class="flex-1 flex flex-col gap-4 relative z-10">
@@ -339,7 +339,7 @@ const downloadNote = async () => {
         <div class="flex flex-col gap-2 flex-1 min-w-0">
           <div class="flex items-center gap-2 min-w-0">
             <h3
-              class="text-[17px] font-bold text-black/80 leading-snug group-hover:text-black transition-colors truncate"
+              class="text-[17px] font-bold text-black/80 dark:text-white/80 leading-snug group-hover:text-black dark:group-hover:text-white transition-colors truncate"
             >
               {{ note.title }}
             </h3>
@@ -347,7 +347,7 @@ const downloadNote = async () => {
 
           <div
             v-if="note.format"
-            class="inline-flex w-fit items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/4 border border-black/5 text-black/60 text-[10px] font-bold uppercase tracking-wider group-hover:bg-black/[0.07] group-hover:text-black transition-all"
+            class="inline-flex w-fit items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/4 dark:bg-white/10 border border-black/5 dark:border-white/10 text-black/60 dark:text-white/60 text-[10px] font-bold uppercase tracking-wider group-hover:bg-black/[0.07] dark:group-hover:bg-white/15 group-hover:text-black dark:group-hover:text-white transition-all"
           >
             <span class="material-symbols-outlined text-[13px]">
               {{ note.format === "md" ? "markdown" : "description" }}
@@ -366,8 +366,8 @@ const downloadNote = async () => {
             class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg transition-all"
             :class="
               note.isPinned
-                ? 'text-black bg-black/10 hover:bg-black/15'
-                : 'text-black/30 hover:text-black hover:bg-black/5'
+                ? 'text-black dark:text-white bg-black/10 dark:bg-white/10 hover:bg-black/15 dark:hover:bg-white/15'
+                : 'text-black/30 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
             "
             :title="note.isPinned ? 'Desfijar nota' : 'Fijar nota'"
           >
@@ -382,8 +382,8 @@ const downloadNote = async () => {
           <button
             ref="optionsButtonRef"
             @click.stop="toggleOptions"
-            class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg text-black/30 hover:text-black hover:bg-black/5 transition-all"
-            :class="isOptionsOpen ? 'bg-black/5 text-black' : ''"
+            class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg text-black/30 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all"
+            :class="isOptionsOpen ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white' : ''"
           >
             <span class="material-symbols-outlined text-[20px]">
               more_vert
@@ -393,7 +393,7 @@ const downloadNote = async () => {
       </div>
 
       <p
-        class="text-[12px] text-black/55 leading-relaxed font-medium line-clamp-2 group-hover:text-black/70 transition-colors"
+        class="text-[12px] text-black/55 dark:text-white/60 leading-relaxed font-medium line-clamp-2 group-hover:text-black/70 dark:group-hover:text-white/80 transition-colors"
       >
         {{ note.content }}
       </p>
@@ -403,14 +403,14 @@ const downloadNote = async () => {
           <div
             v-for="tag in note.tags"
             :key="tag"
-            class="px-2 py-0.5 rounded-md bg-black/5 border border-black/5 text-[10px] font-bold text-black/40 uppercase tracking-tight"
+            class="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/10 text-[10px] font-bold text-black/40 dark:text-white/50 uppercase tracking-tight"
           >
             #{{ tag }}
           </div>
         </template>
         <div
           v-else
-          class="px-2 py-0.5 rounded-md bg-black/5 border border-black/5 text-[10px] font-bold text-black/40 uppercase tracking-tight"
+          class="px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/10 text-[10px] font-bold text-black/40 dark:text-white/50 uppercase tracking-tight"
         >
           Sin etiquetas
         </div>
@@ -419,7 +419,7 @@ const downloadNote = async () => {
 
     <div
       v-if="showDate || showVisits || (showLastSeen && note.lastSeen)"
-      class="relative z-10 border-t border-black/5 pt-2.5 flex items-center justify-between gap-4"
+      class="relative z-10 border-t border-black/5 dark:border-white/10 pt-2.5 flex items-center justify-between gap-4"
     >
       <div
         v-if="showDate || (showLastSeen && note.lastSeen)"
@@ -427,19 +427,19 @@ const downloadNote = async () => {
       >
         <template v-if="dateType === 'both'">
           <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[14px] text-black/30">
+            <span class="material-symbols-outlined text-[14px] text-black/30 dark:text-white/40">
               calendar_today
             </span>
-            <span class="text-[11.5px] font-bold text-black/50">
+            <span class="text-[11.5px] font-bold text-black/50 dark:text-white/60">
               {{ getRelativeTime(note.createdAt, "createdAt") }}
             </span>
           </div>
 
           <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[14px] text-black/20">
+            <span class="material-symbols-outlined text-[14px] text-black/20 dark:text-white/30">
               update
             </span>
-            <span class="text-[11px] font-medium text-black/40">
+            <span class="text-[11px] font-medium text-black/40 dark:text-white/50">
               {{ getRelativeTime(note.updatedAt, "updatedAt") }}
             </span>
           </div>
@@ -447,10 +447,10 @@ const downloadNote = async () => {
 
         <template v-else>
           <div v-if="showDate" class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[14px] text-black/30">
+            <span class="material-symbols-outlined text-[14px] text-black/30 dark:text-white/40">
               calendar_today
             </span>
-            <span class="text-[11.5px] font-bold text-black/50">
+            <span class="text-[11.5px] font-bold text-black/50 dark:text-white/60">
               {{
                 getRelativeTime(
                   note[dateType as "createdAt" | "updatedAt"],
@@ -465,10 +465,10 @@ const downloadNote = async () => {
           v-if="showLastSeen && note.lastSeen"
           class="flex items-center gap-1.5"
         >
-          <span class="material-symbols-outlined text-[14px] text-black/30">
+          <span class="material-symbols-outlined text-[14px] text-black/30 dark:text-white/40">
             visibility
           </span>
-          <span class="text-[11px] font-medium text-black/40">
+          <span class="text-[11px] font-medium text-black/40 dark:text-white/50">
             {{ getRelativeTime(note.lastSeen, "lastSeen") }}
           </span>
         </div>
@@ -476,7 +476,7 @@ const downloadNote = async () => {
 
       <div
         v-if="showVisits"
-        class="flex items-center gap-1.5 px-3 py-1.5 bg-black/4 rounded-xl text-black/40 group-hover:text-black/80 group-hover:bg-black/8 transition-all shrink-0"
+        class="flex items-center gap-1.5 px-3 py-1.5 bg-black/4 dark:bg-white/10 rounded-xl text-black/40 dark:text-white/50 group-hover:text-black/80 dark:group-hover:text-white/80 group-hover:bg-black/8 dark:group-hover:bg-white/15 transition-all shrink-0"
         title="Visitas"
       >
         <span class="material-symbols-outlined text-[16px]"> visibility </span>

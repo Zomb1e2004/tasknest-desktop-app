@@ -32,7 +32,7 @@ onUnmounted(() => {
 <template>
   <section class="flex flex-col gap-6 select-none mx-auto w-full">
     <div class="flex flex-col gap-6">
-      <hr class="border-t-2 border-black/5" />
+      <hr class="border-t-2 border-black/5 dark:border-white/10" />
 
       <div class="relative group">
         <div class="absolute inset-0 pointer-events-none flex items-center">
@@ -44,7 +44,7 @@ onUnmounted(() => {
               :animate="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
               :exit="{ opacity: 0, y: -10, filter: 'blur(4px)' }"
               :transition="{ duration: 0.5, ease: 'easeInOut' }"
-              class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-black/10 leading-none font-['Manrope'] truncate w-full"
+              class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-black/10 dark:text-white/20 leading-none font-['Manrope'] truncate w-full"
             >
               {{ sampleTitles[currentTitleIndex] }}
             </motion.div>
@@ -52,7 +52,7 @@ onUnmounted(() => {
         </div>
 
         <h2
-          class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-black/90 leading-none relative z-10"
+          class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter text-black/90 dark:text-white/90 leading-none relative z-10"
         >
           <input
             v-model="noteTitle"
@@ -61,12 +61,12 @@ onUnmounted(() => {
             @focus="isFocused = true"
             @blur="isFocused = false"
             autocomplete="off"
-            class="w-full bg-transparent outline-none border-none transition-all font-['Manrope']"
+            class="w-full bg-transparent outline-none border-none transition-all font-['Manrope'] text-black dark:text-white placeholder:text-black/30 dark:placeholder-white/40"
           />
         </h2>
       </div>
 
-      <hr class="border-t-2 border-black/5" />
+      <hr class="border-t-2 border-black/5 dark:border-white/10" />
     </div>
   </section>
 </template>

@@ -23,19 +23,19 @@ withDefaults(defineProps<Props>(), {
         : 'cursor-pointer active:scale-95',
       fullWidth ? 'w-full' : '',
       variant === 'primary' && !disabled
-        ? 'bg-black text-white shadow hover:shadow-md hover:-translate-y-[2px] hover:bg-black/90 active:shadow-sm active:translate-y-0'
+        ? 'bg-black text-white shadow hover:shadow-md hover:-translate-y-[2px] hover:bg-black/90 active:shadow-sm active:translate-y-0 dark:bg-white dark:text-black dark:hover:bg-neutral-200'
         : '',
       variant === 'primary' && disabled
-        ? 'bg-transparent text-black/40 border border-black/10'
+        ? 'bg-transparent text-black/40 border border-black/10 dark:text-white/40 dark:border-white/10'
         : '',
       variant === 'secondary' && !disabled
-        ? 'bg-white text-black border border-black hover:bg-black/5 hover:-translate-y-[2px] active:translate-y-0'
+        ? 'bg-white text-black border border-black hover:bg-black/5 hover:-translate-y-[2px] active:translate-y-0 dark:bg-neutral-900 dark:text-white dark:border-white/15 dark:hover:bg-neutral-800'
         : '',
       variant === 'secondary' && disabled
-        ? 'bg-white text-black/20 border border-black/5'
+        ? 'bg-white text-black/20 border border-black/5 dark:bg-neutral-900 dark:text-white/20 dark:border-white/5'
         : '',
       variant === 'ghost'
-        ? 'bg-transparent text-black hover:bg-black/10 hover:scale-105 active:scale-95'
+        ? 'bg-transparent text-black hover:bg-black/10 hover:scale-105 active:scale-95 dark:text-white dark:hover:bg-white/10'
         : '',
     ]"
   >

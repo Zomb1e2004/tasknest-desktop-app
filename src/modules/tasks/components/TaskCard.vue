@@ -41,13 +41,13 @@ const formatTime = (timestamp: number) => {
 const getPriorityClass = (priority: string) => {
   switch (priority) {
     case "Alto":
-      return "bg-black text-white";
+      return "bg-black text-white dark:bg-white dark:text-black";
     case "Medio":
-      return "border border-black text-black";
+      return "border border-black text-black dark:border-white/15 dark:text-white";
     case "Bajo":
-      return "bg-black/[0.05] text-black/40 border border-transparent";
+      return "bg-black/[0.05] text-black/40 border border-transparent dark:bg-white/10 dark:text-white/40 dark:border-transparent";
     default:
-      return "bg-black/5 text-black/30 border border-transparent";
+      return "bg-black/5 text-black/30 border border-transparent dark:bg-white/10 dark:text-white/30 dark:border-transparent";
   }
 };
 
@@ -186,17 +186,17 @@ const clearAllTags = () => {
     :animate="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.25, ease: 'easeOut' }"
     :class="[
-      'group relative bg-white border rounded-3xl flex transition-all duration-300 cursor-pointer overflow-visible',
+      'group relative bg-white dark:bg-neutral-900 border rounded-3xl flex transition-all duration-300 cursor-pointer overflow-visible',
       isGrid
-        ? 'flex-col gap-3 p-5 shadow-sm hover:shadow-lg border-black/10 hover:border-black/20'
-        : 'flex-row items-center gap-3.5 p-4 hover:bg-black/2 border-black/10',
+        ? 'flex-col gap-3 p-5 shadow-sm hover:shadow-lg border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'
+        : 'flex-row items-center gap-3.5 p-4 hover:bg-black/2 dark:hover:bg-white/10 border-black/10 dark:border-white/10',
       task.completed ? 'opacity-60' : '',
     ]"
     @click="showUpdateModal = true"
   >
     <div
       v-if="isGrid"
-      class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 to-transparent rounded-3xl"
+      class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-linear-to-br from-black/2 dark:from-white/10 to-transparent rounded-3xl"
     />
 
     <div
@@ -205,8 +205,8 @@ const clearAllTags = () => {
       :class="[
         'w-[22px] h-[22px] border-2 rounded-lg transition-all duration-300 shrink-0 flex items-center justify-center relative z-10',
         task.completed
-          ? 'bg-black border-black/80 shadow-sm'
-          : 'border-black/20 group-hover:border-black/40',
+          ? 'bg-black border-black/80 dark:bg-white dark:border-white/80 shadow-sm'
+          : 'border-black/20 dark:border-white/15 group-hover:border-black/40 dark:group-hover:border-white/40',
       ]"
     >
       <svg
@@ -231,8 +231,8 @@ const clearAllTags = () => {
           :class="[
             'text-[15px] font-bold leading-tight transition-all duration-300',
             task.completed
-              ? 'text-black/30 line-through decoration-black/20'
-              : 'text-black/80 group-hover:text-black',
+              ? 'text-black/30 dark:text-white/30 line-through decoration-black/20 dark:decoration-white/20'
+              : 'text-black/80 dark:text-white/80 group-hover:text-black dark:group-hover:text-white',
           ]"
         >
           {{ task.title }}
@@ -245,8 +245,8 @@ const clearAllTags = () => {
           <button
             ref="optionsButtonRef"
             @click.stop="toggleOptions"
-            class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg text-black/30 hover:text-black hover:bg-black/5 transition-all"
-            :class="isOptionsOpen ? 'bg-black/5 text-black' : ''"
+            class="flex cursor-pointer items-center justify-center w-8 h-8 rounded-lg text-black/30 dark:text-white/30 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all"
+            :class="isOptionsOpen ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white' : ''"
           >
             <span class="material-symbols-outlined text-[20px]">
               more_vert
@@ -261,7 +261,7 @@ const clearAllTags = () => {
           :class="[
             'px-2 py-[2px] text-[10px] font-bold uppercase rounded-full tracking-wider transition-all duration-300',
             task.completed
-              ? 'bg-black/3 text-black/20 border-black/5'
+              ? 'bg-black/3 dark:bg-white/10 text-black/20 dark:text-white/20 border-black/5 dark:border-white/10'
               : getPriorityClass(task.priority),
           ]"
         >
@@ -276,8 +276,8 @@ const clearAllTags = () => {
             :key="tag"
             layout
             :class="[
-              'text-[11px] font-bold tracking-wide transition-colors duration-300 py-px px-1.5 rounded-md bg-black/5 flex items-center',
-              task.completed ? 'text-black/10' : 'text-black/40 group-hover:text-black/60',
+              'text-[11px] font-bold tracking-wide transition-colors duration-300 py-px px-1.5 rounded-md bg-black/5 dark:bg-white/10 flex items-center',
+              task.completed ? 'text-black/10 dark:text-white/20' : 'text-black/40 dark:text-white/40 group-hover:text-black/60 dark:group-hover:text-white/60',
             ]"
           >
             # <span class="capitalize ml-0.5">{{ tag }}</span>
@@ -291,8 +291,8 @@ const clearAllTags = () => {
       :class="[
         'text-[12px] font-bold transition-all duration-300 relative z-10',
         task.completed
-          ? 'text-black/20'
-          : 'text-black/30 group-hover:text-black/60',
+          ? 'text-black/20 dark:text-white/20'
+          : 'text-black/30 dark:text-white/30 group-hover:text-black/60 dark:group-hover:text-white/60',
         isGrid ? 'order-3 mt-auto' : 'shrink-0',
       ]"
     >

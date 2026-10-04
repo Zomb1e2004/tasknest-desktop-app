@@ -63,7 +63,7 @@ const handleTagDeleted = async (tagName: string) => {
     <template #filters>
       <div class="px-3 pt-1 pb-2">
         <span
-          class="text-[10px] font-bold text-black/30 uppercase tracking-widest"
+          class="text-[10px] font-bold text-black/30 dark:text-white/40 uppercase tracking-widest"
         >
           General
         </span>
@@ -77,11 +77,11 @@ const handleTagDeleted = async (tagName: string) => {
         class="w-full cursor-pointer text-left px-3 py-2 text-[13px] font-semibold transition-colors flex items-center gap-2.5 mx-0"
         :class="
           !selectedTag && !selectedFormat
-            ? 'bg-black/5 text-black'
-            : 'text-black/55 hover:bg-black/4 hover:text-black/80'
+            ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white'
+            : 'text-black/55 dark:text-white/60 hover:bg-black/4 dark:hover:bg-white/10 hover:text-black/80 dark:hover:text-white/80'
         "
       >
-        <span class="material-symbols-outlined text-[15px] text-black/40"
+        <span class="material-symbols-outlined text-[15px] text-black/40 dark:text-white/50"
           >done_all</span
         >
         Todas las notas
@@ -92,26 +92,26 @@ const handleTagDeleted = async (tagName: string) => {
         >
       </button>
 
-      <div class="h-px bg-black/5 my-1 mx-3"></div>
+      <div class="h-px bg-black/5 dark:bg-white/10 my-1 mx-3"></div>
 
       <div class="px-3 pt-1 pb-2">
         <span
-          class="text-[10px] font-bold text-black/30 uppercase tracking-widest"
+          class="text-[10px] font-bold text-black/30 dark:text-white/40 uppercase tracking-widest"
         >
           Filtrar por formato
         </span>
       </div>
 
       <div
-        class="flex gap-1 mx-2.5 mb-1 bg-black/3 p-1 rounded-xl border border-black/5"
+        class="flex gap-1 mx-2.5 mb-1 bg-black/3 dark:bg-white/10 p-1 rounded-xl border border-black/5 dark:border-white/10"
       >
         <button
           @click="selectFormat('md')"
           class="flex-1 cursor-pointer py-2 rounded-lg text-[12px] font-bold transition-all"
           :class="
             selectedFormat === 'md'
-              ? 'bg-white shadow-sm text-black border border-black/5'
-              : 'text-black/40 hover:text-black/60'
+              ? 'bg-white dark:bg-white shadow-sm text-black dark:text-black border border-black/5 dark:border-white/10'
+              : 'text-black/40 dark:text-white/50 hover:text-black/60 dark:hover:text-white/80'
           "
         >
           MD
@@ -121,8 +121,8 @@ const handleTagDeleted = async (tagName: string) => {
           class="flex-1 cursor-pointer py-2 rounded-lg text-[12px] font-bold transition-all"
           :class="
             selectedFormat === 'txt'
-              ? 'bg-white shadow-sm text-black border border-black/5'
-              : 'text-black/40 hover:text-black/60'
+              ? 'bg-white dark:bg-white shadow-sm text-black dark:text-black border border-black/5 dark:border-white/10'
+              : 'text-black/40 dark:text-white/50 hover:text-black/60 dark:hover:text-white/80'
           "
         >
           TXT

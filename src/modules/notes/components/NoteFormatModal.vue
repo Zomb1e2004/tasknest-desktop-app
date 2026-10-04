@@ -16,10 +16,10 @@ const emit = defineEmits<{
   <Modal v-if="show" @close="emit('close')">
     <div class="flex flex-col gap-6 text-center">
       <div class="flex flex-col gap-2">
-        <h2 class="text-xl font-bold text-black font-['Manrope']">
+        <h2 class="text-xl font-bold text-black dark:text-white font-['Manrope']">
           Selecciona el formato
         </h2>
-        <p class="text-sm text-black/60 font-['Manrope']">
+        <p class="text-sm text-black/60 dark:text-white/60 font-['Manrope']">
           ¿En qué formato deseas crear tu nota?
         </p>
       </div>
@@ -31,7 +31,7 @@ const emit = defineEmits<{
               <span class="material-symbols-outlined text-2xl">markdown</span>
               <span class="font-bold">Markdown (MD)</span>
             </div>
-            <p class="text-[11px] text-black/45 leading-relaxed px-6">
+            <p class="text-[11px] text-black/45 dark:text-white/50 leading-relaxed px-6">
               Para un estilo profesional con formato enriquecido y estructurado.
             </p>
           </div>
@@ -43,9 +43,9 @@ const emit = defineEmits<{
               <span class="material-symbols-outlined text-2xl"
                 >description</span
               >
-              <span class="font-bold text-black/80">Texto Plano (TXT)</span>
+              <span class="font-bold text-black/80 dark:text-white/80">Texto Plano (TXT)</span>
             </div>
-            <p class="text-[11px] text-black/45 leading-relaxed px-6">
+            <p class="text-[11px] text-black/45 dark:text-white/50 leading-relaxed px-6">
               Ideal para notas rápidas, sencillas y sin distracciones.
             </p>
           </div>

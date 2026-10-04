@@ -56,17 +56,17 @@ const emit = defineEmits<{
 <template>
   <section class="font-['Manrope'] w-full">
     <div class="flex items-center justify-between mb-4 px-2">
-      <h2 class="text-xl font-bold text-black/90">Notas recientes</h2>
+      <h2 class="text-xl font-bold text-black/90 dark:text-white/90">Notas recientes</h2>
       <div class="flex items-center gap-3">
         <button
           @click="$router.push('/notes')"
-          class="text-xs font-bold tracking-[0.15em] uppercase text-black/40 hover:text-black transition-colors cursor-pointer"
+          class="text-xs font-bold tracking-[0.15em] uppercase text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors cursor-pointer"
         >
           Ver todas
         </button>
         <button
           @click="isGridView = !isGridView"
-          class="text-black/30 hover:text-black transition-colors cursor-pointer flex items-center justify-center p-1 rounded-md hover:bg-black/5"
+          class="text-black/30 dark:text-white/30 hover:text-black dark:hover:text-white transition-colors cursor-pointer flex items-center justify-center p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/10"
           :title="
             isGridView
               ? 'Cambiar a vista de lista'

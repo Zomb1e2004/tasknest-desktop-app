@@ -17,7 +17,7 @@ withDefaults(
     :class="
       variant === 'dark'
         ? 'bg-black border-black hover:bg-black/90 hover:shadow-xl hover:shadow-black/10'
-        : 'bg-black/5 border-black/10 hover:bg-black/10 hover:border-black/20 hover:shadow-sm'
+        : 'bg-black/5 dark:bg-white/10 border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 hover:shadow-sm'
     "
   >
     <div
@@ -25,7 +25,7 @@ withDefaults(
       :class="
         variant === 'dark'
           ? 'bg-white/15 group-hover:bg-white/25'
-          : 'bg-white/60 group-hover:bg-white'
+          : 'bg-white/60 dark:bg-neutral-900/90 group-hover:bg-white dark:group-hover:bg-neutral-900'
       "
     >
       <span
@@ -33,7 +33,7 @@ withDefaults(
         :class="
           variant === 'dark'
             ? 'text-white/90 group-hover:text-white'
-            : 'text-black/40 group-hover:text-black/80'
+            : 'text-black/40 dark:text-white/60 group-hover:text-black/80 dark:group-hover:text-white/80'
         "
         >{{ icon }}</span
       >
@@ -43,7 +43,7 @@ withDefaults(
       :class="
         variant === 'dark'
           ? 'text-white/80 group-hover:text-white'
-          : 'text-black/50 group-hover:text-black/90'
+          : 'text-black/50 dark:text-white/60 group-hover:text-black/90 dark:group-hover:text-white/90'
       "
       >{{ text }}</span
     >
